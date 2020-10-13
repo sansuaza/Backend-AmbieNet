@@ -2,7 +2,8 @@
 
 # Django rest framework
 from rest_framework.views import APIView
-from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework import status, viewsets
 from rest_framework.response import Response
 
 #Models
@@ -15,18 +16,10 @@ from AmbieNet.users.serializers import (
     UserSignUpSerializer
 )
 
-"""@api_view(['GET'])
-def list_profiles(request):
-    
-    profiles = Profile.objects.filter(reputation>3)
-    serializer = ProfileSerializer(profiles, many= True)
-
-    return Response(data)"""
-
-
-class UserSignUpApiView(APIView):
-    
-    def post(self, request, *args, **kwargs):
+class UserViewSet(viewsets.GenericViewSet):
+    """View sets"""
+    @action(detail=False, methods['post'])
+    def signup(self, request):
         serializer = UserSignUpSerializer(data = request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
@@ -34,23 +27,17 @@ class UserSignUpApiView(APIView):
 
         return Response(data, status = status.HTTP_201_CREATED)
 
-
-
-class UserLoginApiView(APIView):
-
-    def post(self, request, *args, **kwargs):
-
+    @action(detail=False, methods['post'])
+    def login(self, request):
         serializer = UserLoginSerializer(data=request.data)
-        """Se validan los datos contenidos en el data"""
         serializer.is_valid(raise_exception= True)
-
-        """Se hace save de el token para obtener dicho token de la sesion"""
         user, token = serializer.save()
-
         data = {
             'user' :  UserModelSerializer(user).data,
             'token' : token
         }
-
         return Response(data, status=status.HTTP_201_CREATED)
+
+
+
 
