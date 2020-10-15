@@ -89,6 +89,7 @@ class UserLoginSerializer(serializers.Serializer):
         return data
 
     def create(self, data):
+        """Generate or retrive new token."""
 
         """el metodo "get_or_create" es una auxiliar para el patron de 
         diseño singleton"""

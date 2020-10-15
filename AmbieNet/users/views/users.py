@@ -18,7 +18,7 @@ from AmbieNet.users.serializers import (
 
 class UserViewSet(viewsets.GenericViewSet):
     """View sets"""
-    @action(detail=False, methods['post'])
+    @action(detail=False, methods=['post'])
     def signup(self, request):
         serializer = UserSignUpSerializer(data = request.data)
         serializer.is_valid(raise_exception=True)
@@ -27,7 +27,7 @@ class UserViewSet(viewsets.GenericViewSet):
 
         return Response(data, status = status.HTTP_201_CREATED)
 
-    @action(detail=False, methods['post'])
+    @action(detail=False, methods=['post'])
     def login(self, request):
         serializer = UserLoginSerializer(data=request.data)
         serializer.is_valid(raise_exception= True)
