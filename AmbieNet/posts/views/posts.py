@@ -7,6 +7,7 @@ from rest_framework.response import Response
 
 #Models
 from AmbieNet.posts.models import Post,Image
+from AmbieNet.users.models import User
 
 #Serialzers
 from AmbieNet.posts.serializers import(
@@ -20,5 +21,4 @@ class PostCreateApiView(APIView):
         serializer.is_valid(raise_exception=True)
         post = serializer.save()
         data = PostModelSerializer(post).data
-
-        return Response(data,status = status.HTTP_201_CREATE)
+        return Response(data, status = status.HTTP_201_CREATED)

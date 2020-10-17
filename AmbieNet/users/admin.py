@@ -20,7 +20,7 @@ class CustomUserAdmin(UserAdmin):
 class ProfileAdmin(admin.ModelAdmin):
     """Profile model admin."""
 
-    list_display = ('user', 'country','city')
+    list_display = ('pk','user', 'country','city','picture','latitud','longitud')
     search_fields = ('user__username', 'user__email', 'user__first_name', 'user__last_name')
     list_filter = ('reputation', 'country')
 

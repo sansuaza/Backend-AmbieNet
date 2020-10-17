@@ -5,6 +5,7 @@ from rest_framework import serializers
 
 #Models
 from AmbieNet.posts.models import Post, Image
+from AmbieNet.users.models import User, Profile
 #from AmbieNet.users.models import User, Profile
 
 class PostModelSerializer(serializers.ModelSerializer):
@@ -12,8 +13,7 @@ class PostModelSerializer(serializers.ModelSerializer):
         """Meta Class"""
         model = Post
         fields = (
-            'user_id',
-            'profile_id',
+            'user',
             'title',
             'description',
             'type_catastrophe',
@@ -23,6 +23,20 @@ class PostModelSerializer(serializers.ModelSerializer):
         )
 
 class PostCreateSerializer(serializers.Serializer):
+
+    """ user = serializers.PrimaryKeyRelatedField(many=True, read_only=True) """
+
+     
+    """
+    profile = serializers.CharField(
+        min_length = 1,
+        max_length = 50
+    ) """
+
+    user = serializers.CharField(
+        min_length = 1,
+        max_length = 50
+    )
 
     title = serializers.CharField(
         min_length = 5,
@@ -41,10 +55,14 @@ class PostCreateSerializer(serializers.Serializer):
 
     latitud = serializers.FloatField()
     longitud = serializers.FloatField()
+    
 
 
  
     def create(self, data):
-        
-        post = Post.objects.create(**data)
+        #Modificar esta busqueda manual, esto se debe sacar por el self, no entiendo porque pero asi dice don suaza :D
+        user = User.objects.get(username=data['user'])
+        profile = Profile.objects.get(user=user)
+        data.pop('user')
+        post = Post.objects.create(user=user, profile=profile,**data)
         return post
