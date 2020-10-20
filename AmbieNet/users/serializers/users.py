@@ -11,7 +11,12 @@ from rest_framework.validators import UniqueValidator
 #Models
 from AmbieNet.users.models import User,Profile
 
+#Serializers
+from AmbieNet.users.serializers.profiles import ProfileModelSerializer
+
 class UserModelSerializer(serializers.ModelSerializer):
+    
+    profile = ProfileModelSerializer(read_only=True)
     class Meta:
         """Meta class"""
         model = User
@@ -20,7 +25,8 @@ class UserModelSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'email',
-            'phone_number'
+            'phone_number',
+            'profile'
         )
 
 class UserSignUpSerializer(serializers.Serializer):
@@ -57,7 +63,7 @@ class UserSignUpSerializer(serializers.Serializer):
         return data
     
     def create(self, data):
-        user= User.objects.create_user(**data)
+        user= User.objects.create_user(**data, is_verified=True)
         profile = Profile.objects.create(user=user)
         return user
         
@@ -87,10 +93,10 @@ class UserLoginSerializer(serializers.Serializer):
 
         self.context['user']= user
         return data
-
+  
     def create(self, data):
         """Generate or retrive new token."""
-
+        
         """el metodo "get_or_create" es una auxiliar para el patron de 
         diseño singleton"""
         token, created = Token.objects.get_or_create(user=self.context['user'])

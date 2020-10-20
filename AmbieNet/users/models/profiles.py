@@ -19,7 +19,7 @@ class Profile(AmbieNetModel):
     )
     biography = models.TextField(max_length=500, blank=True)
 
-
+  
 
     """User's ubication"""
     country = models.TextField(max_length=30)

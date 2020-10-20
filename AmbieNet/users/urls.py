@@ -4,6 +4,7 @@
 from django.urls import include, path
 
 # Django REST Framework
+"""Genera todos los paths del viewset de manera automática"""
 from rest_framework.routers import DefaultRouter
 
 # Views
