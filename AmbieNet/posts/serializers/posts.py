@@ -19,7 +19,8 @@ class PostModelSerializer(serializers.ModelSerializer):
             'type_catastrophe',
             'latitud',
             'longitud',
-            #'photo'
+            #'photo',
+            'validator_number',
         )
 
 class PostCreateSerializer(serializers.Serializer):
@@ -66,3 +67,6 @@ class PostCreateSerializer(serializers.Serializer):
         data.pop('user')
         post = Post.objects.create(user=user, profile=profile,**data)
         return post
+
+
+

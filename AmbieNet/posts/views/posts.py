@@ -16,9 +16,19 @@ from AmbieNet.posts.serializers import(
 )
 
 class PostCreateApiView(APIView):
+
+    querySet = Post.objects.all() 
+    
     def post(self,request, *args, **kwargs):
         serializer = PostCreateSerializer(data = request.data)
         serializer.is_valid(raise_exception=True)
         post = serializer.save()
         data = PostModelSerializer(post).data
         return Response(data, status = status.HTTP_201_CREATED)
+
+    def get(self, request, *args, **kwargs):
+        
+        queryset = Post.objects.all()
+        serializer = PostModelSerializer(queryset, many=True)
+        data = serializer.data
+        return Response(data)
