@@ -6,7 +6,6 @@ from rest_framework import serializers
 #Models
 from AmbieNet.posts.models import Post, Image
 from AmbieNet.users.models import User, Profile
-#from AmbieNet.users.models import User, Profile
 
 class PostModelSerializer(serializers.ModelSerializer):
     class Meta:
@@ -66,6 +65,7 @@ class PostCreateSerializer(serializers.Serializer):
         profile = Profile.objects.get(user=user)
         data.pop('user')
         post = Post.objects.create(user=user, profile=profile,**data)
+        post.appened(post)
         return post
 
 

@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.response import Response
 
 #Models
-from AmbieNet.posts.models import Post,Image
+from AmbieNet.posts.models import Post
 from AmbieNet.users.models import User
 
 #Serialzers
@@ -16,9 +16,7 @@ from AmbieNet.posts.serializers import(
 )
 
 class PostCreateApiView(APIView):
-
-    querySet = Post.objects.all() 
-    
+ 
     def post(self,request, *args, **kwargs):
         serializer = PostCreateSerializer(data = request.data)
         serializer.is_valid(raise_exception=True)
