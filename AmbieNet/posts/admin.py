@@ -9,5 +9,5 @@ from AmbieNet.posts.models.posts import Post
 @admin.register(Post)
 class PostsAdmin(admin.ModelAdmin):
     """Post models admin."""
-    list_display = ('title', 'description','latitud','longitud')
+    list_display = ('id','title', 'description','latitud','longitud')
     list_filter = ('type_catastrophe','validator_number')

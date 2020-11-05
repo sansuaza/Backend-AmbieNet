@@ -65,7 +65,6 @@ class PostCreateSerializer(serializers.Serializer):
         profile = Profile.objects.get(user=user)
         data.pop('user')
         post = Post.objects.create(user=user, profile=profile,**data)
-        post.appened(post)
         return post
 
 
