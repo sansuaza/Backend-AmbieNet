@@ -14,20 +14,21 @@ from AmbieNet.posts.models import Post, Image
 class ImageModelSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta Class"""
-        model = Post
+        model = Image
         fields = (
             'post',
-            'image'
+            'photo'
         )
 
 class ImageCreateSerializer(serializers.Serializer):
 
-    image = ImageField(max_length=None, allow_empty_file=False)
-
-    post = serializers.CharField(min_length = 5)
+    post = serializers.CharField(min_length = 1)
+    
+    photo = ImageField(max_length=None, allow_empty_file=False)
 
     def create (self,data):
         post = Post.objects.get(id=data['post'])
         data.pop('post')
         image = Image.objects.create(post=post,**data)
+        return image
 

@@ -22,6 +22,14 @@ class PostModelSerializer(serializers.ModelSerializer):
             'validator_number',
         )
 
+        read_only_fields = (
+            'user',
+            'title',
+            'latitud',
+            'longitud',
+            'type_catastrophe',
+        )
+
 class PostCreateSerializer(serializers.Serializer):
 
     """ user = serializers.PrimaryKeyRelatedField(many=True, read_only=True) """
