@@ -36,8 +36,8 @@ class Post(AmbieNetModel):
 
     """Location Data """
     #if precision is not exactly change for DecimalField
-    latitud = models.FloatField(default=0.0)
-    longitud = models.FloatField(default=0.0)
+    latitude = models.FloatField(default=0.0)
+    longitude = models.FloatField(default=0.0)
 
 
 

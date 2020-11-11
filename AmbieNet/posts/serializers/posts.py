@@ -16,8 +16,8 @@ class PostModelSerializer(serializers.ModelSerializer):
             'title',
             'description',
             'type_catastrophe',
-            'latitud',
-            'longitud',
+            'latitude',
+            'longitude',
             'photo',
             'validator_number',
         )
@@ -66,8 +66,8 @@ class PostCreateSerializer(serializers.Serializer):
         max_length = 20
     )
 
-    latitud = serializers.FloatField()
-    longitud = serializers.FloatField()
+    latitude = serializers.FloatField()
+    longitude = serializers.FloatField()
     
 
 
