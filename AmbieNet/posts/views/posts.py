@@ -22,9 +22,10 @@ class PostViewSet(mixins.UpdateModelMixin,
                 ,viewsets.GenericViewSet):
     
     queryset = Post.objects.all()
+    lookup_field = 'id'
 
     def get_serializer_class(self):
-        if (self.action == 'list'):
+        if (self.action in ['list', 'update']):
             return PostModelSerializer
         return PostCreateSerializer    
 

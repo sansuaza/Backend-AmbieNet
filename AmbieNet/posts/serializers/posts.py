@@ -4,7 +4,7 @@
 from rest_framework import serializers
 
 #Models
-from AmbieNet.posts.models import Post, Image
+from AmbieNet.posts.models import Post
 from AmbieNet.users.models import User, Profile
 
 class PostModelSerializer(serializers.ModelSerializer):
@@ -18,7 +18,7 @@ class PostModelSerializer(serializers.ModelSerializer):
             'type_catastrophe',
             'latitud',
             'longitud',
-            #'photo',
+            'photo',
             'validator_number',
         )
 
@@ -27,6 +27,7 @@ class PostModelSerializer(serializers.ModelSerializer):
             'title',
             'latitud',
             'longitud',
+            'photo',
             'type_catastrophe',
         )
 
@@ -44,6 +45,10 @@ class PostCreateSerializer(serializers.Serializer):
     user = serializers.CharField(
         min_length = 1,
         max_length = 50
+    )
+
+    photo = serializers.CharField(
+        max_length = 255
     )
 
     title = serializers.CharField(
