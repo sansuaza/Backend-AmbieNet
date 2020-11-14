@@ -9,7 +9,7 @@ from rest_framework import status, viewsets, mixins
 
 #Models
 from AmbieNet.posts.models import Post
-from AmbieNet.users.models import User
+from AmbieNet.users.models import User,Profile
 
 #Serialzers
 from AmbieNet.posts.serializers import(
@@ -37,3 +37,5 @@ class PostViewSet(mixins.UpdateModelMixin,
         post = serializer.save()
         data = PostModelSerializer(post).data
         return Response(data, status = status.HTTP_201_CREATED)
+
+            

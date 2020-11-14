@@ -65,7 +65,7 @@ class PostCreateSerializer(serializers.Serializer):
         min_length = 2,
         max_length = 20
     )
-
+s
     latitude = serializers.FloatField()
     longitude = serializers.FloatField()
     
@@ -78,6 +78,16 @@ class PostCreateSerializer(serializers.Serializer):
         profile = Profile.objects.get(user=user)
         data.pop('user')
         post = Post.objects.create(user=user, profile=profile,**data)
+        
+
+
+        users = Profile.objects.all()
+        for u in users:
+            if(u.longitude>=left 
+               AND u.longitude <=rigth 
+               AND u.latitude>=down 
+               AND u.latitude<=up):
+               affected.append(u)
         return post
 
 
