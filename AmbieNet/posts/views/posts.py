@@ -6,13 +6,12 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status, viewsets, mixins
+from rest_framework.permissions import IsAdminUser
 
 #Models
 from AmbieNet.posts.models import Post
 from AmbieNet.users.models import User,Profile
 
-#Permissions
-from AmbieNet.posts.permissions import IsAdminUser
 
 #Serialzers
 from AmbieNet.posts.serializers import(
@@ -31,9 +30,9 @@ class PostViewSet(mixins.UpdateModelMixin,
     def get_permissions(self):
         """Assign the permissions based on action required."""
         permissions = []
-        if self.action in ['delete']:
-            permissions = [isAdmin]
-        return [permissions() for permission in permissions]
+        if self.action in ['delete', 'destroy']:
+            permissions = [IsAdminUser]
+        return [permission() for permission in permissions]
         
 
     def get_serializer_class(self):

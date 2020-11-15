@@ -12,7 +12,7 @@ from AmbieNet.users.models.profiles import Profile
 class CustomUserAdmin(UserAdmin):
     """User model admin."""
 
-    list_display = ('email', 'username', 'first_name', 'last_name')
+    list_display = ('email', 'username', 'first_name', 'last_name','is_staff')
     list_filter = ('created', 'modified')
 
 
