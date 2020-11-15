@@ -1,6 +1,0 @@
-data['user'],
-            data['title'],
-            data['description'],
-            data['type_catastrophe'],
-            data['latitud'],
-            data['longitud']
