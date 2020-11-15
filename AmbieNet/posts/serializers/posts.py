@@ -1,4 +1,6 @@
 """post sealizer"""
+#Django
+from django.core import mail
 
 #Django REST Framework
 from rest_framework import serializers
@@ -65,7 +67,7 @@ class PostCreateSerializer(serializers.Serializer):
         min_length = 2,
         max_length = 20
     )
-s
+
     latitude = serializers.FloatField()
     longitude = serializers.FloatField()
     
@@ -78,17 +80,46 @@ s
         profile = Profile.objects.get(user=user)
         data.pop('user')
         post = Post.objects.create(user=user, profile=profile,**data)
-        
 
-
-        users = Profile.objects.all()
-        for u in users:
-            if(u.longitude>=left 
-               AND u.longitude <=rigth 
-               AND u.latitude>=down 
-               AND u.latitude<=up):
-               affected.append(u)
+        """making of ubication posts."""
+        data= {
+            'latitude': post.latitude,
+            'longitude': post.longitude
+        }
+        self.define_perimeter(data=data)
+       
         return post
+
+
+    def define_perimeter(self, data):
+        """Handle of calculate the perimeter of disaster.""" 
+        profiles = Profile.objects.all()
+        mails_users_affected = []
+        for profile in profiles:
+            """if(profile.longitude>=left 
+               AND profile.longitude <=rigth 
+               AND profile.latitude>=down 
+               AND profile.latitude<=up):"""
+            mails_users_affected.append(User.objects.get(profile=profile).email)
+
+       
+        self.send_email_alert(mails= mails_users_affected) 
+          
+
+    def send_email_alert(self, mails):
+        subject = 'Mensaje de alerta de castastrofe ambiental cercana'
+        message = 'Se le informa que en una locación cerca al lugar donde usted recide, ha ocurrido una catastrofe. Se le recomienda discresión'
+        from_email = 'AmbieNet <noreply@ambienet.com>'
+
+        users_mails = []
+        users_mails = mails
+        print('Correos de los usuarios---------------------------------- {}'.format(users_mails))
+     
+        datatuple = (subject, message, from_email, [users_mails])
+        number_sent_mails = mail.send_mass_mail((datatuple,))
+
+        print('Correos enviados de alerta: ' + str(number_sent_mails))
+        
 
 
 
