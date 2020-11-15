@@ -22,6 +22,7 @@ class PostModelSerializer(serializers.ModelSerializer):
             'longitude',
             'photo',
             'validator_number',
+            'created',
         )
 
         read_only_fields = (
@@ -31,6 +32,8 @@ class PostModelSerializer(serializers.ModelSerializer):
             'longitud',
             'photo',
             'type_catastrophe',
+            'created',
+
         )
 
 class PostCreateSerializer(serializers.Serializer):

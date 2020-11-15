@@ -43,7 +43,7 @@ class Post(AmbieNetModel):
 
 
     def __str__(self):
-        """Return username."""
+        """Return titles."""
         return self.title
 
 
