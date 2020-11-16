@@ -31,7 +31,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
                 viewsets.GenericViewSet):
     """cuando se redirecciona a este viewset, pide que haya autenticacion"""
     #permission_classes = (IsAuthenticated,)
-    queryset = User.objects.all()
+    queryset = User.objects.exclude(is_staff=True)
     serializer_class = UserModelSerializer
 
     "lookup field is the atribute that will be used to search the user"
