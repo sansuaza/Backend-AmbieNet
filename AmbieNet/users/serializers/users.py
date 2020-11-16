@@ -26,7 +26,8 @@ class UserModelSerializer(serializers.ModelSerializer):
             'last_name',
             'email',
             'phone_number',
-            'profile'
+            'profile',
+            'is_staff'
         )
 
 class UserSignUpSerializer(serializers.Serializer):
