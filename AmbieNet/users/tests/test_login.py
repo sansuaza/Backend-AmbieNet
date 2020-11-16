@@ -23,15 +23,18 @@ class LoginAPITestCase(APITestCase):
             first_name= 'steven',
             last_name= 'saenz'
         )
-        self.login_url = '/users/login'
+        
 
         self.data = {
             'username': 'saenzavs',
             'password': 'admin12345'
         }
 
+        self.url = '/users/login/'
+
     def test_code_generation(self):
-   
-        request = self.client.post(self.login_url, self.data, format = 'json')
+        
+        
+        request = self.client.post(self.url, self.data, format = 'json')
         import pdb; pdb.set_trace()     
         #self.assertEqual(response.status_code, status.HTTP_201_CREATED)
