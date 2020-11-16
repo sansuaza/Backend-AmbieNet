@@ -58,11 +58,8 @@ class UserSignUpSerializer(serializers.Serializer):
     first_name = serializers.CharField(min_length=3, max_length=20)
     last_name = serializers.CharField(min_length=3, max_length=20)
 
-<<<<<<< HEAD
-=======
     latitude = serializers.FloatField()
     longitude = serializers.FloatField()
->>>>>>> bf8a210ea8abe9178b625921dd5bbafa3eba01c1
 
     def validate(self, data):
         passwd = data['password']
