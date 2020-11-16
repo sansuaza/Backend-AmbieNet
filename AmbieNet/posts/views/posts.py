@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAdminUser
 
 #Models
 from AmbieNet.posts.models import Post
-from AmbieNet.users.models import User,Profile
+from AmbieNet.users.models import User
 
 
 #Serialzers
@@ -46,6 +46,7 @@ class PostViewSet(mixins.UpdateModelMixin,
         """Handle of create the posts."""
         serializer_class = self.get_serializer_class()
         serializer = serializer_class(data = request.data)
+        
         serializer.is_valid(raise_exception=True)
         post = serializer.save()
         

@@ -7,7 +7,8 @@ from rest_framework import serializers
 
 #Models
 from AmbieNet.posts.models import Post
-from AmbieNet.users.models import User, Profile
+from AmbieNet.users.models import User
+from AmbieNet.users.models import Profile
 
 class PostModelSerializer(serializers.ModelSerializer):
 
@@ -85,7 +86,7 @@ class PostCreateSerializer(serializers.Serializer):
     def create(self, data):
         #Modificar esta busqueda manual, esto se debe sacar por el self, no entiendo porque pero asi dice don suaza :D
         
-        #user = User.objects.get(username=data['user'])
+        user = User.objects.get(username=data['user'])
         profile = Profile.objects.get(user=user)
         data.pop('created')
         data.pop('id')
