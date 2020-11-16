@@ -26,7 +26,7 @@ class PostModelSerializer(serializers.ModelSerializer):
             'photo',
             'validator_number',
             'created',
-            'id'
+            'id',
         )
 
         read_only_fields = (
@@ -37,7 +37,7 @@ class PostModelSerializer(serializers.ModelSerializer):
             'photo',
             'type_catastrophe',
             'created',
-            'id'
+            'id',
 
         )
 
@@ -84,8 +84,11 @@ class PostCreateSerializer(serializers.Serializer):
  
     def create(self, data):
         #Modificar esta busqueda manual, esto se debe sacar por el self, no entiendo porque pero asi dice don suaza :D
-        user = User.objects.get(username=data['user'])
+        
+        #user = User.objects.get(username=data['user'])
         profile = Profile.objects.get(user=user)
+        data.pop('created')
+        data.pop('id')
         data.pop('user')
         post = Post.objects.create(user=user, profile=profile,**data)
 
