@@ -27,6 +27,7 @@ from AmbieNet.users.serializers import (
 
 class UserViewSet(mixins.RetrieveModelMixin,
                 mixins.UpdateModelMixin,
+                mixins.ListModelMixin,
                 viewsets.GenericViewSet):
     """cuando se redirecciona a este viewset, pide que haya autenticacion"""
     #permission_classes = (IsAuthenticated,)
@@ -60,7 +61,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
         serializer = UserLoginSerializer(data=request.data)
         serializer.is_valid(raise_exception= True)
         user, token = serializer.save()
-        
+
         data = {
             'user' :  UserModelSerializer(user).data,
             'token' : token
