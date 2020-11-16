@@ -20,7 +20,10 @@ class ProfileModelSerializer(serializers.ModelSerializer):
             'country',
             'state',
             'city',
-            'reputation'
+            'reputation',
+            'latitude',
+            'longitude',
+            'picture'
         )
         read_only_fields=(
             'reputation',

@@ -10,9 +10,12 @@ from AmbieNet.posts.models import Post
 from AmbieNet.users.models import User, Profile
 
 class PostModelSerializer(serializers.ModelSerializer):
+
+    
     class Meta:
         """Meta Class"""
         model = Post
+        
         fields = (
             'user',
             'title',
