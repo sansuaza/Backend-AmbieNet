@@ -58,14 +58,25 @@ class UserSignUpSerializer(serializers.Serializer):
     first_name = serializers.CharField(min_length=3, max_length=20)
     last_name = serializers.CharField(min_length=3, max_length=20)
 
+    latitude = serializers.FloatField()
+    longitude = serializers.FloatField()
+
     def validate(self, data):
         passwd = data['password']
         password_validation.validate_password(passwd)
         return data
     
     def create(self, data):
+        
+        data_profile = {}
+        data_profile['latitude'] = data['latitude']
+        data_profile['longitude'] = data['longitude']
+
+        data.pop('latitude')
+        data.pop('longitude')
+
         user= User.objects.create_user(**data, is_verified=True)
-        profile = Profile.objects.create(user=user)
+        profile = Profile.objects.create(user=user, **data_profile)
         return user
         
 
