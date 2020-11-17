@@ -32,7 +32,7 @@ class PostViewSet(mixins.UpdateModelMixin,
 
     def get_permissions(self):
         """Assign the permissions based on action required."""
-        permissions = [IsAuthenticated]
+        permissions = []
         if self.action in ['delete', 'destroy']:
             permissions = [IsAdminUser]
         return [permission() for permission in permissions]
@@ -60,6 +60,8 @@ class PostViewSet(mixins.UpdateModelMixin,
     @action(detail=False, methods=['post'])
     def publicacion(self,request, *args, **kwargs):
         """Handle of create the posts."""
+        
+        
         serializer_class = self.get_serializer_class()
         serializer = serializer_class(data = request.data)
         
