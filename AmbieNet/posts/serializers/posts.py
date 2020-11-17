@@ -45,14 +45,6 @@ class PostModelSerializer(serializers.ModelSerializer):
 
 class PostCreateSerializer(serializers.Serializer):
 
-    """ user = serializers.PrimaryKeyRelatedField(many=True, read_only=True) """
-
-     
-    """
-    profile = serializers.CharField(
-        min_length = 1,
-        max_length = 50
-    ) """
 
     user = serializers.CharField(
         min_length = 1,
@@ -80,8 +72,7 @@ class PostCreateSerializer(serializers.Serializer):
 
     latitude = serializers.FloatField()
     longitude = serializers.FloatField()
-    
-
+   
 
  
     def create(self, data):

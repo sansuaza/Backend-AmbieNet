@@ -18,7 +18,6 @@ from AmbieNet.users.models import User
 from AmbieNet.posts.serializers import(
     PostModelSerializer,
     PostCreateSerializer,
-    ValidatorModelSerializer,
     ValidatorCreateSerializer
 )
 
@@ -39,8 +38,9 @@ class PostViewSet(mixins.UpdateModelMixin,
         
 
     def get_serializer_class(self):
-        if (self.action in ['list', 'update']):
-            
+       
+        if (self.action in ['list', 'partial_update']):
+            import pdb; pdb.set_trace()
             return PostModelSerializer
         return PostCreateSerializer    
 
@@ -54,10 +54,10 @@ class PostViewSet(mixins.UpdateModelMixin,
             'user' : user,   
             'post' : id_post
         }
-        serializer = ValidatorModelSerializer(data = datos)
+        serializer = ValidatorCreateSerializer(data = request.data)
         serializer.is_valid(raise_exception=True)
         validator = serializer.save()
-        data = ValidatorModelSerializer(validator).data
+        data = ValidatorCreateSerializer(validator).data
         #import pdb; pdb.set_trace()
         data['validator_number']=post.validator_number
         return Response(data, status = status.HTTP_201_CREATED)

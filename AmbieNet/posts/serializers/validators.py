@@ -9,20 +9,9 @@ from rest_framework import serializers
 from AmbieNet.posts.models import Post, Validator
 from AmbieNet.users.models import User
 
-class ValidatorModelSerializer(serializers.ModelSerializer):
-
-    
-    class Meta:
-        """Meta Class"""
-        model = Validator
-        
-        fields = (
-            'user',
-            'post',
-        )
 
 
-class ValidatorCreateSerializer(serializers.Serializer):
+class ValidatorCreateSerializer(serializers.ModelSerializer):
 
     user = serializers.CharField(
         min_length = 1,
@@ -33,11 +22,32 @@ class ValidatorCreateSerializer(serializers.Serializer):
         min_length = 1,
         max_length = 50
     )
+    class Meta:
+        """Meta Class"""
+        model = Validator
+        
+        fields = (
+            'user',
+            'post',
+        )
+
+
+    def validate(self,data):
+        """Verify that validator does not exist."""
+        user = User.objects.get(username=data['user'])
+        post = Post.objects.get(id=data['post'])
+
+        validator = Validator.objects.filter(
+            user=user,
+            post=post
+        )
+        if validator.exists():
+            raise serializers.ValidationError('This user has validated this post before')
+        return data
 
     def create(self, data):
         #Modificar esta busqueda manual, esto se debe sacar por el self, no entiendo porque pero asi dice don suaza :D
-        import pdb; pdb.set_trace()
-        print("llega hasta el create de serializer-------------------------")
+        
         user = User.objects.get(username=data['user'])
         post = Post.objects.get(id=data['post'])
         data['user']=user
@@ -46,5 +56,4 @@ class ValidatorCreateSerializer(serializers.Serializer):
        
         return validator
 
-    #def validate(self,data):
-        
+    
