@@ -29,7 +29,6 @@ class PostModelSerializer(serializers.ModelSerializer):
             'created',
             'id',
             'username',
-            'reputation',
         )
 
         read_only_fields = (
@@ -42,7 +41,6 @@ class PostModelSerializer(serializers.ModelSerializer):
             'created',
             'id',
             'username',
-            'reputation'
 
         )
 

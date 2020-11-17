@@ -45,10 +45,7 @@ class PostViewSet(mixins.UpdateModelMixin,
 
     @action(detail=True, methods=['post'])
     def validator(self,request,*args,**kwargs):
-        post=self.get_object()
-        context = self.get_serializer_context()
-        context['post'] = post
-        serializer = ValidatorModelSerializer(data = request.data, context=context)
+        serializer = ValidatorModelSerializer(data = request.data)
         serializer.is_valid(raise_expetion=True)
         data = serializer.save().data
         validators = Post.objects.get(data['post']).validator_number
@@ -60,8 +57,6 @@ class PostViewSet(mixins.UpdateModelMixin,
     @action(detail=False, methods=['post'])
     def publicacion(self,request, *args, **kwargs):
         """Handle of create the posts."""
-        
-        
         serializer_class = self.get_serializer_class()
         serializer = serializer_class(data = request.data)
         
