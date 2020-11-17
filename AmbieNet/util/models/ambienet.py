@@ -16,12 +16,12 @@ class AmbieNetModel(models.Model):
 
     created = models.DateTimeField(
         'created at',
-        auto_now_add=True,
+        auto_now_add=False,
         help_text='Date time on which the object was created.'
     )
     modified = models.DateTimeField(
         'modified at',
-        auto_now=True,
+        auto_now=False,
         help_text='Date time on which the object was last modified.'
     )
 
