@@ -21,7 +21,7 @@ class AmbieNetModel(models.Model):
     )
     modified = models.DateTimeField(
         'modified at',
-        auto_now=False,
+        auto_now=True,
         help_text='Date time on which the object was last modified.'
     )
 

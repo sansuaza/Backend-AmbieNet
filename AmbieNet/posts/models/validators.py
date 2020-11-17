@@ -15,9 +15,6 @@ class Validator(AmbieNetModel):
     user = models.ForeignKey (User, on_delete = models.CASCADE)
     post = models.ForeignKey (Post, on_delete = models.CASCADE)
 
-
-
-
     def __str__(self):
         """Return user."""
         return self.user 
