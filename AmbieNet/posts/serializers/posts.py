@@ -28,7 +28,7 @@ class PostModelSerializer(serializers.ModelSerializer):
             'validator_number',
             'created',
             'id',
-            'username',
+            'username'
         )
 
         read_only_fields = (
@@ -41,7 +41,6 @@ class PostModelSerializer(serializers.ModelSerializer):
             'created',
             'id',
             'username',
-
         )
 
 class PostCreateSerializer(serializers.Serializer):
@@ -90,6 +89,8 @@ class PostCreateSerializer(serializers.Serializer):
         user = User.objects.get(username=data['user'])
         username = user.username
         profile = Profile.objects.get(user=user)
+        reputation = profile.reputation
+        picture = profile.picture
         data.pop('user')
         post = Post.objects.create(user=user, username=username, profile=profile,**data)
 
