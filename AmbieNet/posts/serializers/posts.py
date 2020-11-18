@@ -101,9 +101,14 @@ class PostCreateSerializer(serializers.Serializer):
         """Handle of calculate the perimeter of disaster.""" 
         profiles = Profile.objects.all()
         mails_users_affected = []
-        import pdb; pdb.set_trace()
         for profile in profiles: 
-            if(profile.longitude>=(data['longitude'] - 0.000010) and profile.longitude <= (data['longitude'] + 0.000010) and profile.latitude >= (data['latitude'] - 0.000010) and profile.latitude<= (data.latitude + 0.000010)):
+            if(profile.longitude>=(data['longitude'] - 0.000010) and profile.longitude <= (data['longitude'] + 0.000010) and profile.latitude >= (data['latitude'] - 0.000010) and profile.latitude<= (data['latitude'] + 0.000010)):
+                
+
+                import pdb; pdb.set_trace()
+
+
+
                 subject = 'Mensaje de alerta de castastrofe ambiental cercana'
                 message = 'Se le informa que en una locación cerca al lugar donde usted recide, ha ocurrido una catastrofe. Se le recomienda discresión'
                 from_email = 'AmbieNet <noreply@ambienet.com>'   
