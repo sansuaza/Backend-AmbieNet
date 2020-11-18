@@ -70,7 +70,6 @@ class PostViewSet(mixins.UpdateModelMixin,
         serializer = serializer_class(data = request.data)
         serializer.is_valid(raise_exception=True)
         post = serializer.save()
-        
         data = PostModelSerializer(post).data
         
         username = User.objects.get(id = data['user']).username
