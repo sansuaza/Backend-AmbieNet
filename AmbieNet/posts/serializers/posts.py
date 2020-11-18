@@ -104,7 +104,7 @@ class PostCreateSerializer(serializers.Serializer):
                AND profile.longitude <=rigth 
                AND profile.latitude>=down 
                AND profile.latitude<=up):"""
-            mails_users_affected.append("'{}'".format(User.objects.get(profile=profile).email)
+            mails_users_affected.append("'{}'".format(User.objects.get(profile=profile).email))
 
        
         self.send_email_alert(mails= mails_users_affected) 
