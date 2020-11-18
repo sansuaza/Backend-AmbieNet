@@ -38,9 +38,8 @@ class PostViewSet(mixins.UpdateModelMixin,
         
 
     def get_serializer_class(self):
-       
-        if (self.action in ['list', 'partial_update']):
-            import pdb; pdb.set_trace()
+        if (self.action in ['list', 'update']):
+            
             return PostModelSerializer
         return PostCreateSerializer    
 
@@ -54,12 +53,13 @@ class PostViewSet(mixins.UpdateModelMixin,
             'user' : user,   
             'post' : id_post
         }
-        serializer = ValidatorCreateSerializer(data = request.data)
+
+        serializer = ValidatorModelSerializer(data = datos)
         serializer.is_valid(raise_exception=True)
         validator = serializer.save()
-        data = ValidatorCreateSerializer(validator).data
-        #import pdb; pdb.set_trace()
+        data = ValidatorModelSerializer(validator).data
         data['validator_number']=post.validator_number
+        
         return Response(data, status = status.HTTP_201_CREATED)
 
 
