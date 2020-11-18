@@ -75,6 +75,8 @@ class PostViewSet(mixins.UpdateModelMixin,
         
         username = User.objects.get(id = data['user']).username
         data['user']= username
+
+
         return Response(data, status = status.HTTP_201_CREATED)
 
 

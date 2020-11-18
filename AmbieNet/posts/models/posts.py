@@ -35,6 +35,12 @@ class Post(AmbieNetModel):
     photo=models.CharField(max_length=255, blank=True)
 
     username = models.CharField(max_length=255, blank=True)
+    picture = models.CharField(max_length=255, blank=True, null=True)
+    reputation = models.FloatField(
+        default=5.0,
+        help_text="User's reputation based on the rides taken and offered."
+    )
+
     """Location Data """
     #if precision is not exactly change for DecimalField
     latitude = models.FloatField(default=0.0)
