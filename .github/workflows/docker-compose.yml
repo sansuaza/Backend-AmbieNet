@@ -1,0 +1,15 @@
+name: docker-compose-actions-workflow
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: importar comandos docker-compose
+        run: export COMPOSE_FILE=local.yml
+      - name: construccion de las imagenes
+        run: docker-compose build
+      - name: subir las imagenes creadas con los servicios establecidos
+        run: docker-compose up    
+      
+
