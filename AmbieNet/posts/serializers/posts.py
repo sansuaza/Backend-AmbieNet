@@ -104,10 +104,16 @@ class PostCreateSerializer(serializers.Serializer):
                AND profile.longitude <=rigth 
                AND profile.latitude>=down 
                AND profile.latitude<=up):"""
-            mails_users_affected.append("'{}'".format(User.objects.get(profile=profile).email))
+            subject = 'Mensaje de alerta de castastrofe ambiental cercana'
+            message = 'Se le informa que en una locación cerca al lugar donde usted recide, ha ocurrido una catastrofe. Se le recomienda discresión'
+            from_email = 'AmbieNet <noreply@ambienet.com>'   
+            mail = "['{}']".format(User.objects.get(profile=profile).email)
+            send_mail(subject, message, from_email, mail)
+            #mails_users_affected.append(User.objects.get(profile=profile).email)
 
-       
-        self.send_email_alert(mails= mails_users_affected) 
+
+        
+        #self.send_email_alert(mails= mails_users_affected) 
           
 
     def send_email_alert(self, mails):
