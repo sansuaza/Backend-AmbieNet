@@ -12,6 +12,8 @@ from AmbieNet.users.models import Profile
 
 from AmbieNet.users.serializers.profiles import ProfileModelSerializer
 
+""" prueba  """
+
 class PostModelSerializer(serializers.ModelSerializer):
 
     profile = ProfileModelSerializer(read_only=True)
