@@ -10,16 +10,12 @@ jobs:
       - name: construccion de las imagenes con el usuarios sudo
         run: sudo docker-compose -f local.yml build
       - name: subir servicios
-<<<<<<< HEAD
-        run: sudo docker-compose -f local.yml up
-        run: sudo docker-compose -f local.yml pytest
-=======
         run: sudo docker-compose -f local.yml up -d
       - name: bajar los servicios de docker
         run: sudo docker-compose -f local.yml down
       - name: se ejecutan pruebas unitarias
         run: sudo docker-compose -f local.yml run --rm django pytest
->>>>>>> 3333775dacf3644894c45903014938be4d6b19da
+
 
 
       
