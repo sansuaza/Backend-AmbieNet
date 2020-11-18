@@ -7,7 +7,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: importar comandos docker-compose
         run: export COMPOSE_FILE=local.yml
-      - name: subir las imagenes creadas con los servicios establecidos
-        run: docker-compose up    
+      - name: construccion de las imagenes con el usuarios sudo
+        run: sudo docker-compose -f local.yml build
+      - name: subir servicios
+        run: sudo docker-compose -f local.yml upS
+
+
       
 
