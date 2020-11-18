@@ -10,7 +10,7 @@ jobs:
       - name: construccion de las imagenes con el usuarios sudo
         run: sudo docker-compose -f local.yml build
       - name: subir servicios
-        run: sudo docker-compose -f local.yml up
+        run: sudo docker-compose -f local.yml up -d
       - name: bajar los servicios de docker
         run: sudo docker-compose -f local.yml down
 
