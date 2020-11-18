@@ -84,9 +84,6 @@ class PostCreateSerializer(serializers.Serializer):
         user = User.objects.get(username=data['user'])
         username = user.username
         profile = Profile.objects.get(user=user)
-        picture = profile.picture
-        reputation = profile.reputation
-        picture = profile.picture
         data.pop('user')
         post = Post.objects.create(user=user, username=username, profile=profile,**data)
 
