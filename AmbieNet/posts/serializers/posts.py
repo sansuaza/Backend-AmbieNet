@@ -10,9 +10,12 @@ from AmbieNet.posts.models import Post
 from AmbieNet.users.models import User
 from AmbieNet.users.models import Profile
 
+from AmbieNet.users.serializers.profiles import ProfileModelSerializer
+from AmbieNet.users.serializers.users import UserModelSerializer
+
 class PostModelSerializer(serializers.ModelSerializer):
 
-    
+    profile = ProfileModelSerializer(read_only=True)
     class Meta:
         """Meta Class"""
         model = Post
@@ -29,8 +32,8 @@ class PostModelSerializer(serializers.ModelSerializer):
             'created',
             'id',
             'username',
-            'picture',
-            'reputation'
+            'profile'
+            
         )
 
         read_only_fields = (
@@ -42,9 +45,7 @@ class PostModelSerializer(serializers.ModelSerializer):
             'type_catastrophe',
             'created',
             'id',
-            'username',
-            'picture',
-            'reputation'
+            'username'
         )
 
 class PostCreateSerializer(serializers.Serializer):
