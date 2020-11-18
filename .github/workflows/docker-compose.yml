@@ -14,7 +14,7 @@ jobs:
       - name: bajar los servicios de docker
         run: sudo docker-compose -f local.yml down
       - name: se ejecutan pruebas unitarias
-        run: sudo docker-compose -f run --rm pytest
+        run: sudo docker-compose -f local.yml run --rm django pytest
 
 
       
