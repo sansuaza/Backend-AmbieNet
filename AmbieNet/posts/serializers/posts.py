@@ -120,7 +120,7 @@ class PostCreateSerializer(serializers.Serializer):
         print('Correos de los usuarios---------------------------------- {}'.format(users_mails))
      
         datatuple = (subject, message, from_email, [users_mails])
-        number_sent_mails = send_mail((datatuple,))
+        number_sent_mails = send_mail(subject, message, from_email, [users_mails])
 
         print('Correos enviados de alerta: ' + str(number_sent_mails))
         
