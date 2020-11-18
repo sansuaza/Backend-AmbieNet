@@ -1,6 +1,6 @@
 """post sealizer"""
 #Django
-from django.core import mail
+from django.core.mail import send_mail
 
 #Django REST Framework
 from rest_framework import serializers
@@ -86,25 +86,25 @@ class PostCreateSerializer(serializers.Serializer):
         post = Post.objects.create(user=user, username=username, profile=profile,**data)
 
         """making of ubication posts."""
-        """data= {
+        data= {
             'latitude': post.latitude,
             'longitude': post.longitude
         }
-        self.define_perimeter(data=data) """
+        self.define_perimeter(data=data) 
        
         return post
 
 
-    #def define_perimeter(self, data):
+    def define_perimeter(self, data):
         """Handle of calculate the perimeter of disaster.""" 
-        """profiles = Profile.objects.all()
+        profiles = Profile.objects.all()
         mails_users_affected = []
         for profile in profiles: 
-            if(profile.longitude>=left 
+            """if(profile.longitude>=left 
                AND profile.longitude <=rigth 
                AND profile.latitude>=down 
-               AND profile.latitude<=up):
-               mails_users_affected.append(User.objects.get(profile=profile).email)
+               AND profile.latitude<=up):"""
+            mails_users_affected.append(User.objects.get(profile=profile).email)
 
        
         self.send_email_alert(mails= mails_users_affected) 
@@ -120,9 +120,9 @@ class PostCreateSerializer(serializers.Serializer):
         print('Correos de los usuarios---------------------------------- {}'.format(users_mails))
      
         datatuple = (subject, message, from_email, [users_mails])
-        number_sent_mails = mail.send_mass_mail((datatuple,))
+        number_sent_mails = send_mail.send_mass_mail((datatuple,))
 
-        print('Correos enviados de alerta: ' + str(number_sent_mails))"""
+        print('Correos enviados de alerta: ' + str(number_sent_mails))
         
 
 

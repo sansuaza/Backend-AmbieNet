@@ -58,6 +58,11 @@ class LoginAPITestCase(APITestCase):
 
         self.assertEqual(len(listUser), 1)
 
+    def test_persist_profile(self):
+        listUser = Profile.objects.all()
+
+        self.assertEqual(len(listUser), 1)
+
     def test_persistence_post(self):
         post = Post.objects.filter(user= self.user)
         self.assertIsNotNone(post)
