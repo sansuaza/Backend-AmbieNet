@@ -11,7 +11,6 @@ from AmbieNet.users.models import User
 from AmbieNet.users.models import Profile
 
 from AmbieNet.users.serializers.profiles import ProfileModelSerializer
-from AmbieNet.users.serializers.users import UserModelSerializer
 
 class PostModelSerializer(serializers.ModelSerializer):
 
@@ -89,7 +88,7 @@ class PostCreateSerializer(serializers.Serializer):
         reputation = profile.reputation
         picture = profile.picture
         data.pop('user')
-        post = Post.objects.create(picture=picture, reputation=reputation, user=user, username=username, profile=profile,**data)
+        post = Post.objects.create(user=user, username=username, profile=profile,**data)
 
         """making of ubication posts."""
         data= {
