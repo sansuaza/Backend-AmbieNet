@@ -113,9 +113,3 @@ class UserLoginSerializer(serializers.Serializer):
         diseño singleton"""
         token, created = Token.objects.get_or_create(user=self.context['user'])
         return self.context['user'], token.key
-
-
-
-
-
-
