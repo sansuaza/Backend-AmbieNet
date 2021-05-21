@@ -45,6 +45,3 @@ class User(AmbieNetModel, AbstractUser):
     def get_short_name(self):
         """Return username."""
         return self.username
-
-
-

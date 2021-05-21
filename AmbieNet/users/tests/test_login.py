@@ -87,5 +87,3 @@ class LoginAPITestCase(APITestCase):
         user = User.objects.get(username='saenzavs')
 
         post = Post.objects.get(user=user)
-
-    

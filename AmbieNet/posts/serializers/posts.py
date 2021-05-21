@@ -136,7 +136,3 @@ class PostCreateSerializer(serializers.Serializer):
         number_sent_mails = send_mail(subject, message, from_email, [users_mails])
 
         print('Correos enviados de alerta: ' + str(number_sent_mails))
-        
-
-
-

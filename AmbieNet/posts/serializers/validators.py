@@ -55,5 +55,3 @@ class ValidatorCreateSerializer(serializers.ModelSerializer):
         validator = Validator.objects.create(**data)
        
         return validator
-
-    
