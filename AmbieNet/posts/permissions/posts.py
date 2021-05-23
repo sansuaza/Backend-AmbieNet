@@ -1,6 +1,8 @@
-
 #Django REST Framework
 from rest_framework.permissions import BasePermission
 
-class IsAdminUser(BasePermission):
-   """Allow the admin sometimes actions."""
+class IsPostOwner(BasePermission):
+	"""Allow the post owner sometime actions."""
+	
+	def has_object_permission(self, request, view, obj):
+		return request.user == obj.user

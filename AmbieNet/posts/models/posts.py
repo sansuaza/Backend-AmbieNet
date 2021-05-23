@@ -26,7 +26,6 @@ class Post(AmbieNetModel):
     photo=models.CharField(max_length=255, blank=True)
 
     username = models.CharField(max_length=255, blank=True)
-   
 
     """Location Data """
     #if precision is not exactly change for DecimalField

@@ -38,7 +38,6 @@ class UserViewSet(mixins.RetrieveModelMixin,
     "lookup field is the atribute that will be used to search the user"
     lookup_field = "username"
 
-
     def get_permissions(self):
         """Assign the permissions based on action required."""
         permissions = []
