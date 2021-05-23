@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status, viewsets, mixins
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 
 #Models
 from AmbieNet.posts.models import Post
@@ -32,7 +32,11 @@ class PostViewSet(mixins.UpdateModelMixin,
 
     def get_permissions(self):
         """Assign the permissions based on action required."""
-        permissions = [IsAuthenticated]
+        if self.action in ['list']:
+            permissions = [AllowAny]
+        else:
+            permissions = [IsAuthenticated]
+            
         if self.action in ['delete', 'destroy']:
             permissions = [IsPostOwner | IsAdminUser]
         return [permission() for permission in permissions]
