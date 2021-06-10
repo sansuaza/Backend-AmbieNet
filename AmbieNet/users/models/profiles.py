@@ -14,8 +14,6 @@ class Profile(AmbieNetModel):
     picture = models.CharField(max_length=255, blank=True, null=True)
     biography = models.TextField(max_length=500, blank=True)
 
-  
-
     """User's ubication"""
     country = models.TextField(max_length=30)
     state = models.TextField(max_length=30)

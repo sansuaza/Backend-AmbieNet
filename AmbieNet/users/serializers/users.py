@@ -26,9 +26,17 @@ class UserModelSerializer(serializers.ModelSerializer):
             'last_name',
             'email',
             'phone_number',
-            'profile',
-            'is_staff'
+            'is_staff',
+            'profile'
         )
+
+    def validate(self, data):
+        is_staff_field = data.get('is_staff', None)
+        if is_staff_field != None:
+            raise serializers.ValidationError('is_staff field can not be modified.')
+        
+        return data
+
 
 class UserSignUpSerializer(serializers.Serializer):
 
