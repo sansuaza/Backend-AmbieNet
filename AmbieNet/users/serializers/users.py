@@ -27,14 +27,19 @@ class UserModelSerializer(serializers.ModelSerializer):
             'email',
             'phone_number',
             'is_staff',
+            'role',
             'profile'
+        )
+    
+        read_only_fields = (
+            'role',
         )
 
     def validate(self, data):
         is_staff_field = data.get('is_staff', None)
         if is_staff_field != None:
             raise serializers.ValidationError('is_staff field can not be modified.')
-        
+
         return data
 
 
