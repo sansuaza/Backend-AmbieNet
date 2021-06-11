@@ -30,13 +30,19 @@ class UserViewSet(mixins.RetrieveModelMixin,
                 mixins.ListModelMixin,
                 viewsets.GenericViewSet):
     """cuando se redirecciona a este viewset, pide que haya autenticacion"""
-    #permission_classes = (IsAuthenticated,)
     queryset = User.objects.exclude(is_staff=True)
-    #queryset = User.objects.all()
-    serializer_class = UserModelSerializer
 
     "lookup field is the atribute that will be used to search the user"
     lookup_field = "username"
+
+    def get_serializer_class(self):
+        """Assing the necessary serializer for each process."""
+        if self.action == 'signup':
+            return UserSignUpSerializer
+        if self.action == 'login':
+            return UserLoginSerializer
+        if self.action in ['update', 'partial_update']:
+            return UserModelSerializer
 
     def get_permissions(self):
         """Assign the permissions based on action required."""
@@ -49,7 +55,8 @@ class UserViewSet(mixins.RetrieveModelMixin,
 
     @action(detail=False, methods=['post'])
     def signup(self, request):
-        serializer = UserSignUpSerializer(data = request.data)
+        serializer_class = self.get_serializer_class()
+        serializer = serializer_class(data = request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         data = UserModelSerializer(user).data
@@ -58,8 +65,9 @@ class UserViewSet(mixins.RetrieveModelMixin,
 
     @action(detail=False, methods=['post'])
     def login(self, request):
-        serializer = UserLoginSerializer(data=request.data)
-        serializer.is_valid(raise_exception= True)
+        serializer_class = self.get_serializer_class()
+        serializer = serializer_class(data = request.data)
+        serializer.is_valid(raise_exception=True)
         user, token = serializer.save()
 
         data = {

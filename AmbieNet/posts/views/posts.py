@@ -42,7 +42,7 @@ class PostViewSet(mixins.UpdateModelMixin,
         return [permission() for permission in permissions]
 
     def get_serializer_class(self):
-       
+        """ Assing the necessary serializer for each process. """
         if (self.action in ['list', 'partial_update']):
             return PostModelSerializer
         return PostCreateSerializer    
