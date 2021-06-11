@@ -1,6 +1,6 @@
 """user sealizer"""
 #Django
-from django.contrib.auth import password_validation, authenticate
+from django.contrib.auth import  authenticate
 from django.core.validators import RegexValidator
 
 #Django REST Framework
@@ -26,9 +26,17 @@ class UserModelSerializer(serializers.ModelSerializer):
             'last_name',
             'email',
             'phone_number',
-            'profile',
-            'is_staff'
+            'is_staff',
+            'profile'
         )
+
+    def validate(self, data):
+        is_staff_field = data.get('is_staff', None)
+        if is_staff_field != None:
+            raise serializers.ValidationError('is_staff field can not be modified.')
+        
+        return data
+
 
 class UserSignUpSerializer(serializers.Serializer):
 
@@ -51,7 +59,7 @@ class UserSignUpSerializer(serializers.Serializer):
     phone_number = serializers.CharField(validators= [phone_regex])
 
     password = serializers.CharField(
-        min_length=8, 
+        min_length=6, 
         max_length=16
     )
 
@@ -60,11 +68,6 @@ class UserSignUpSerializer(serializers.Serializer):
 
     latitude = serializers.FloatField()
     longitude = serializers.FloatField()
-
-    def validate(self, data):
-        passwd = data['password']
-        password_validation.validate_password(passwd)
-        return data
     
     def create(self, data):
         
@@ -78,7 +81,6 @@ class UserSignUpSerializer(serializers.Serializer):
         user= User.objects.create_user(**data, is_verified=True)
         profile = Profile.objects.create(user=user, **data_profile)
         return user
-        
 
 class UserLoginSerializer(serializers.Serializer):
     """User login serializer"""
@@ -95,7 +97,7 @@ class UserLoginSerializer(serializers.Serializer):
 
         if not user:
             raise serializers.ValidationError('Invalid credentials')
-        
+
         """ 
         El context es un atributo que da a entender en que contexto
         se desarrolla la peticion, entre esa info el usuario que la hace
@@ -105,10 +107,10 @@ class UserLoginSerializer(serializers.Serializer):
 
         self.context['user']= user
         return data
-  
+
     def create(self, data):
         """Generate or retrive new token."""
-        
+
         """el metodo "get_or_create" es una auxiliar para el patron de 
         diseño singleton"""
         token, created = Token.objects.get_or_create(user=self.context['user'])
