@@ -10,7 +10,7 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
 
     path('', include(('AmbieNet.users.urls', 'users'), namespace = 'users')),
-    path('', include(('AmbieNet.posts.urls', 'posts'), namespace = 'posts'))
+    path('', include(('AmbieNet.posts.urls', 'posts'), namespace = 'posts')),
+    path('', include(('AmbieNet.users.urls', 'staffs'), namespace = 'staffs'))
 
-    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
