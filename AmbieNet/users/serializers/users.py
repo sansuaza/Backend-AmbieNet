@@ -15,7 +15,7 @@ from AmbieNet.users.models import User,Profile
 from AmbieNet.users.serializers.profiles import ProfileModelSerializer
 
 class UserModelSerializer(serializers.ModelSerializer):
-    
+
     profile = ProfileModelSerializer(read_only=True)
     class Meta:
         """Meta class"""
@@ -30,7 +30,7 @@ class UserModelSerializer(serializers.ModelSerializer):
             'role',
             'profile'
         )
-    
+
         read_only_fields = (
             'role',
         )
@@ -56,7 +56,7 @@ class UserSignUpSerializer(serializers.Serializer):
     )
 
     phone_regex = RegexValidator(
-       
+
         regex=r'\+?1?\d{9,15}$',
         message="Phone number must be entered in the format: +999999999. Up to 15 digits allowed."
     )
@@ -64,7 +64,7 @@ class UserSignUpSerializer(serializers.Serializer):
     phone_number = serializers.CharField(validators= [phone_regex])
 
     password = serializers.CharField(
-        min_length=6, 
+        min_length=4,
         max_length=16
     )
 
@@ -73,9 +73,9 @@ class UserSignUpSerializer(serializers.Serializer):
 
     latitude = serializers.FloatField()
     longitude = serializers.FloatField()
-    
+
     def create(self, data):
-        
+
         data_profile = {}
         data_profile['latitude'] = data['latitude']
         data_profile['longitude'] = data['longitude']
@@ -90,8 +90,8 @@ class UserSignUpSerializer(serializers.Serializer):
 class UserLoginSerializer(serializers.Serializer):
     """User login serializer"""
     username = serializers.CharField()
-    password = serializers.CharField(min_length= 8, max_length = 64)
-  
+    password = serializers.CharField(min_length= 4, max_length = 64)
+
     """Se sobreescribe el metodo validate para hacer validacion propias"""
 
 
@@ -103,10 +103,10 @@ class UserLoginSerializer(serializers.Serializer):
         if not user:
             raise serializers.ValidationError('Invalid credentials')
 
-        """ 
+        """
         El context es un atributo que da a entender en que contexto
         se desarrolla la peticion, entre esa info el usuario que la hace
-        como ya se tiene detectado el usuario que va a hacer login, se 
+        como ya se tiene detectado el usuario que va a hacer login, se
         agrega este usuario al contexto
         """
 
@@ -116,7 +116,7 @@ class UserLoginSerializer(serializers.Serializer):
     def create(self, data):
         """Generate or retrive new token."""
 
-        """el metodo "get_or_create" es una auxiliar para el patron de 
+        """el metodo "get_or_create" es una auxiliar para el patron de
         diseño singleton"""
         token, created = Token.objects.get_or_create(user=self.context['user'])
         return self.context['user'], token.key
