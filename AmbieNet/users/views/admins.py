@@ -6,14 +6,15 @@ from rest_framework import status, viewsets, mixins
 from rest_framework.response import Response
 
 #Models
-from AmbieNet.users.models import User
+from AmbieNet.users.models import User, RoleRequest
 
 # Permissions
 from AmbieNet.users.permissions import IsAdminUser
 
 # Serializers
 from AmbieNet.users.serializers import (
-    UserModelSerializer
+    UserModelSerializer,
+    RoleRequestModelSerializer
 )
 
 class AdminViewSet(viewsets.GenericViewSet):
@@ -24,10 +25,11 @@ class AdminViewSet(viewsets.GenericViewSet):
         return [permission() for permission in permissions]
 
     @action(detail=False, methods=['get'])
-    def list_ss(self, request):
-        staff_users = User.objects.filter(role=2)
+    def pending_role_requests(self, request):
+        """ query to get the pending role requests."""
+        role_requests = RoleRequest.objects.filter(status=1)
         data = {
-            'staff_users' : UserModelSerializer(staff_users, many=True).data
+            'peding_role_requests' : RoleRequestModelSerializer(role_requests, many=True).data
         }
         return Response(data, status=status.HTTP_200_OK)
 

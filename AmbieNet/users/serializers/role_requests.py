@@ -39,3 +39,17 @@ class CreateRoleRequestSerializer(serializers.ModelSerializer):
         )
 
         return role_request
+
+class RoleRequestModelSerializer(serializers.ModelSerializer):
+
+    requesting_user = UserModelSerializer(read_only=True)
+    class Meta:
+        model = RoleRequest
+        fields = ('new_role', 'message', 'requesting_user', 'status')
+
+        read_only_fields = (
+            'new_role',
+            'message',
+            'requesting_user',
+            'status'
+        )

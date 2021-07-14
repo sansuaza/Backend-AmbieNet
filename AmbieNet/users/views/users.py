@@ -108,4 +108,4 @@ class UserViewSet(mixins.RetrieveModelMixin,
         serializer.is_valid(raise_exception=True)
         serializer.save()
         data = UserModelSerializer(user).data
-        return Response(data)
+        return Response(data, status=status.HTTP_200_OK)

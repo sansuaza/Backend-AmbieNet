@@ -9,7 +9,7 @@ class RoleRequest(AmbieNetModel):
     """role_request model."""
 
     """Related users."""
-    requesting_user = models.ForeignKey (
+    requesting_user = models.ForeignKey(
         User,
         on_delete = models.CASCADE,
         related_name = 'role_request')
@@ -26,10 +26,12 @@ class RoleRequest(AmbieNetModel):
     REJECTED = 2
     APPROVED = 3
 
-    status = (
+    STATUS_CHOICES = (
         (PENDING, 'pending'),
         (REJECTED, 'rejected'),
         (APPROVED, 'approved')
     )
+
+    status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, blank=True, null=True, default=1)
 
     message = models.TextField(blank = True)
