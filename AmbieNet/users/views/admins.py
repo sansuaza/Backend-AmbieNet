@@ -14,7 +14,8 @@ from AmbieNet.users.permissions import IsAdminUser
 # Serializers
 from AmbieNet.users.serializers import (
     UserModelSerializer,
-    RoleRequestModelSerializer
+    RoleRequestModelSerializer,
+    AnswerRoleRequestSerializer
 )
 
 class AdminViewSet(viewsets.GenericViewSet):
@@ -41,5 +42,28 @@ class AdminViewSet(viewsets.GenericViewSet):
         user.role = request.data['new_role']
         user.save()
         data = UserModelSerializer(user).data
+
+        return Response(data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['post'])
+    def answer_role_requests(self, request):
+        """Endpoint to the staff answer the role requests
+        asked by the users."""
+
+        user = User.objects.get(username = request.data['user__username'])
+        new_role = ""
+        if request.data['request_status'] == 'approved':
+            new_role = request.data['new_role']
+
+        serializer_data = {
+            'staff_username' : request.user.username,
+            'username' : user.username,
+            'request_status' : request.data['request_status'],
+            'new_role' : new_role
+        }
+
+        serializer = AnswerRoleRequestSerializer(data = serializer_data)
+        serializer.is_valid(raise_exception = True)
+        data = RoleRequestModelSerializer(serializer.save()).data
 
         return Response(data, status=status.HTTP_200_OK)

@@ -21,7 +21,12 @@ class User(AmbieNetModel, AbstractUser):
         (USUARIO_REGULAR, 'usuario_regular')
     )
 
-    role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, blank=True, null=True, default=3)
+    role = models.PositiveSmallIntegerField(
+        choices=ROLE_CHOICES,
+        blank=True,
+        null=True,
+        default=3
+        )
 
     email = models.EmailField(
         'email address',
