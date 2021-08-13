@@ -17,4 +17,4 @@ class Validator(AmbieNetModel):
 
     def __str__(self):
         """Return user."""
-        return self.user 
+        return self.user

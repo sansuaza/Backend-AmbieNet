@@ -15,15 +15,6 @@ class Post(AmbieNetModel):
     """User's Data """
     user = models.ForeignKey (User, on_delete = models.CASCADE)
     profile = models.ForeignKey (Profile, on_delete = models.PROTECT)
-    
-
-
-
-
-
-
-
-
 
     """Post's Data """
     title = models.CharField(max_length=60, blank=False)
@@ -32,21 +23,15 @@ class Post(AmbieNetModel):
     #"likes"
     validator_number = models.IntegerField(default=0)
 
-    photo=models.CharField(max_length=255, blank=True)
+    photo=models.ImageField(max_length=255, blank=True)
 
     username = models.CharField(max_length=255, blank=True)
-   
 
     """Location Data """
     #if precision is not exactly change for DecimalField
     latitude = models.FloatField(default=0.0)
     longitude = models.FloatField(default=0.0)
 
-
-
-
     def __str__(self):
         """Return titles."""
         return self.title
-
-

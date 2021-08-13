@@ -6,13 +6,11 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status, viewsets, mixins
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
-
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 
 #Models
 from AmbieNet.posts.models import Post
 from AmbieNet.users.models import User
-
 
 #Serialzers
 from AmbieNet.posts.serializers import(
@@ -20,6 +18,9 @@ from AmbieNet.posts.serializers import(
     PostCreateSerializer,
     ValidatorCreateSerializer
 )
+
+#Permissions
+from AmbieNet.posts.permissions import IsPostOwner
 
 class PostViewSet(mixins.UpdateModelMixin,
                 mixins.ListModelMixin,
@@ -31,14 +32,17 @@ class PostViewSet(mixins.UpdateModelMixin,
 
     def get_permissions(self):
         """Assign the permissions based on action required."""
-        permissions = []
+        if self.action in ['list']:
+            permissions = [AllowAny]
+        else:
+            permissions = [IsAuthenticated]
+            
         if self.action in ['delete', 'destroy']:
-            permissions = [IsAdminUser]
+            permissions = [IsPostOwner | IsAdminUser]
         return [permission() for permission in permissions]
-        
 
     def get_serializer_class(self):
-       
+        """ Assing the necessary serializer for each process. """
         if (self.action in ['list', 'partial_update']):
             return PostModelSerializer
         return PostCreateSerializer    
@@ -61,8 +65,6 @@ class PostViewSet(mixins.UpdateModelMixin,
         data['validator_number']=post.validator_number
         return Response(data, status = status.HTTP_201_CREATED)
 
-
-
     @action(detail=False, methods=['post'])
     def publicacion(self,request, *args, **kwargs):
         """Handle of create the posts."""
@@ -75,7 +77,4 @@ class PostViewSet(mixins.UpdateModelMixin,
         username = User.objects.get(id = data['user']).username
         data['user']= username
 
-
         return Response(data, status = status.HTTP_201_CREATED)
-
-

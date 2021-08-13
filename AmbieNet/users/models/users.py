@@ -11,6 +11,17 @@ class User(AmbieNetModel, AbstractUser):
     Extends from AbstractUser, and keeps the same usernamefield (username)
     """
 
+    ENTIDAD = 1
+    SENSOR_SOCIAL = 2
+    USUARIO_REGULAR = 3
+
+    ROLE_CHOICES = (
+        (ENTIDAD, 'entidad'),
+        (SENSOR_SOCIAL, 'sensor_social'),
+        (USUARIO_REGULAR, 'usuario_regular')
+    )   
+
+    role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, blank=True, null=True, default=3)
 
     email = models.EmailField(
         'email address',
@@ -45,6 +56,3 @@ class User(AmbieNetModel, AbstractUser):
     def get_short_name(self):
         """Return username."""
         return self.username
-
-
-

@@ -49,10 +49,6 @@ class LoginAPITestCase(APITestCase):
 
         self.url = '/posts/'
 
-    def test_code_generation(self):
-    
-        self.assertEqual('test','test')
-
     def test_persist_user(self):
         listUser = User.objects.all()
 
@@ -65,4 +61,29 @@ class LoginAPITestCase(APITestCase):
 
     def test_persistence_post(self):
         post = Post.objects.filter(user= self.user)
+
         self.assertIsNotNone(post)
+
+    def test_filter_post_for_ubication(self):
+        post = Post.objects.filter (latitude = 3.2, longitude= 3.4)
+
+        self.assertIsNotNone(post)
+
+    def test_search_users_home (self):
+        post = Post.objects.filter(latitude = 3.2, longitude= 3.4)
+        self.assertIsNotNone(post)
+
+    def test_search_post_for_type_catastrophe(self):
+        post = Post.objects.filter (type_catastrophe='maremoto')
+
+        self.assertIsNotNone(post)
+
+    def test_search_user_for_username(self):
+        user = User.objects.filter(username='saenzavs')
+
+        self.assertIsNotNone(user)
+
+    def test_search_post_for_user(self):
+        user = User.objects.get(username='saenzavs')
+
+        post = Post.objects.get(user=user)

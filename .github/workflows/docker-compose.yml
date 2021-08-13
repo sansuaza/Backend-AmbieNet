@@ -1,0 +1,22 @@
+name: docker-compose-actions-workflow
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: importar comandos docker-compose
+        run: export COMPOSE_FILE=local.yml
+      - name: construccion de las imagenes con el usuarios sudo
+        run: sudo docker-compose -f local.yml build
+      - name: subir servicios
+        run: sudo docker-compose -f local.yml up -d
+      - name: bajar los servicios de docker
+        run: sudo docker-compose -f local.yml down
+      - name: se ejecutan pruebas unitarias
+        run: sudo docker-compose -f local.yml run --rm django pytest
+
+
+
+      
+

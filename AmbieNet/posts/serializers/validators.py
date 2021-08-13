@@ -31,7 +31,6 @@ class ValidatorCreateSerializer(serializers.ModelSerializer):
             'post',
         )
 
-
     def validate(self,data):
         """Verify that validator does not exist."""
         user = User.objects.get(username=data['user'])
@@ -55,5 +54,3 @@ class ValidatorCreateSerializer(serializers.ModelSerializer):
         validator = Validator.objects.create(**data)
        
         return validator
-
-    
