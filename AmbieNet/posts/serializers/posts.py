@@ -20,7 +20,7 @@ class PostModelSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta Class"""
         model = Post
-        
+
         fields = (
             'user',
             'title',
@@ -34,7 +34,7 @@ class PostModelSerializer(serializers.ModelSerializer):
             'id',
             'username',
             'profile'
-            
+
         )
 
         read_only_fields = (
@@ -91,27 +91,25 @@ class PostCreateSerializer(serializers.Serializer):
             'latitude': post.latitude,
             'longitude': post.longitude
         }
-        self.define_perimeter(data=data) 
-       
+        self.define_perimeter(data=data)
+
         return post
 
     def define_perimeter(self, data):
-        """Handle of calculate the perimeter of disaster.""" 
+        """Handle of calculate the perimeter of disaster."""
         profiles = Profile.objects.all()
         mails_users_affected = []
-        for profile in profiles: 
+        for profile in profiles:
             if(profile.longitude>=(data['longitude'] - 0.000010) and profile.longitude <= (data['longitude'] + 0.000010) and profile.latitude >= (data['latitude'] - 0.000010) and profile.latitude<= (data['latitude'] + 0.000010)):
-
-                import pdb; pdb.set_trace()
 
                 subject = 'Mensaje de alerta de castastrofe ambiental cercana'
                 message = 'Se le informa que en una locación cerca al lugar donde usted recide, ha ocurrido una catastrofe. Se le recomienda discresión'
-                from_email = 'AmbieNet <noreply@ambienet.com>'   
+                from_email = 'AmbieNet <noreply@ambienet.com>'
                 mail = "{}".format(User.objects.get(profile=profile).email)
                 send_mail(subject, message, from_email, [mail])
             #mails_users_affected.append(User.objects.get(profile=profile).email)
 
-        #self.send_email_alert(mails= mails_users_affected) 
+        #self.send_email_alert(mails= mails_users_affected)
 
     def send_email_alert(self, mails):
         subject = 'Mensaje de alerta de castastrofe ambiental cercana'
@@ -121,7 +119,7 @@ class PostCreateSerializer(serializers.Serializer):
         users_mails = []
         users_mails = mails
         print('Correos de los usuarios---------------------------------- {}'.format(users_mails))
-     
+
         datatuple = (subject, message, from_email, [users_mails])
         number_sent_mails = send_mail(subject, message, from_email, [users_mails])
 
