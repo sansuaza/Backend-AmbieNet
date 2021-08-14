@@ -5,7 +5,7 @@ from .base import env
 
 # Base
 SECRET_KEY = env('DJANGO_SECRET_KEY')
-ALLOWED_HOSTS = ['ambienetuq.xyz', '18.224.199.222']
+ALLOWED_HOSTS = ['ambienetuq.xyz', '18.118.160.114']
 #ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['ambienetuq.tk'])
 
 # Databases
