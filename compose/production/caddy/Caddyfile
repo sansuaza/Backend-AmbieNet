@@ -9,10 +9,7 @@ www.{$DOMAIN_NAME} {
         header_upstream X-Forwarded-Proto {scheme}
         header_upstream X-CSRFToken {~csrftoken}
     }
-    log {
-        output stdout
-        format console
-    }
+    log stdout
     errors stdout
     gzip
 }
