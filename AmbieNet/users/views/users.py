@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 #Models
 from AmbieNet.users.models import User,Profile
 
-#Permissions 
+#Permissions
 from rest_framework.permissions import(
     AllowAny,
     IsAuthenticated
@@ -19,7 +19,7 @@ from AmbieNet.users.permissions import IsAccountOwner
 
 #Serializers
 from AmbieNet.users.serializers import (
-    UserModelSerializer, 
+    UserModelSerializer,
     UserLoginSerializer,
     UserSignUpSerializer,
     ProfileModelSerializer
@@ -41,7 +41,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
             return UserSignUpSerializer
         if self.action == 'login':
             return UserLoginSerializer
-        if self.action in ['update', 'partial_update']:
+        if self.action in ['update', 'partial_update', 'retrieve']:
             return UserModelSerializer
 
     def get_permissions(self):

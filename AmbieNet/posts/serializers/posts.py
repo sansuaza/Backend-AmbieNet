@@ -91,7 +91,7 @@ class PostCreateSerializer(serializers.Serializer):
             'latitude': post.latitude,
             'longitude': post.longitude
         }
-        self.define_perimeter(data=data)
+        # self.define_perimeter(data=data)
 
         return post
 
