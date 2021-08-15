@@ -49,29 +49,19 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/'
 
 # Templates
-TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
+TEMPLATES[0]['OPTIONS']['debug'] = DEBUG  # NOQA
 
 # Email
-DEFAULT_FROM_EMAIL = env(
-    'DJANGO_DEFAULT_FROM_EMAIL',
-    default='AmbieNet <noreply@ambienet.com>'
-)
-SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
-EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[AmbieNet]')
+EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
 
 # Admin
 ADMIN_URL = env('DJANGO_ADMIN_URL')
 
-# Anymail (Mailgun)
-INSTALLED_APPS += ['anymail']  # noqa F405
-EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
-ANYMAIL = {
-    'MAILGUN_API_KEY': env('MAILGUN_API_KEY'),
-    'MAILGUN_SENDER_DOMAIN': env('MAILGUN_DOMAIN')
-}
-
 # Gunicorn
 INSTALLED_APPS += ['gunicorn']  # noqa F405
 
-# WhiteNoise
-MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')  # noqa F405
+
+
+
