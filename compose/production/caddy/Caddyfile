@@ -10,7 +10,7 @@ www.{$DOMAIN_NAME} {
         header_upstream X-CSRFToken {~csrftoken}
     }
     log {
-        output stderr
+        output stdout
         format console
     }
     errors stdout
