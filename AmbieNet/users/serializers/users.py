@@ -64,7 +64,7 @@ class UserSignUpSerializer(serializers.Serializer):
     phone_number = serializers.CharField(validators= [phone_regex])
 
     password = serializers.CharField(
-        min_length=4,
+        min_length=6,
         max_length=16
     )
 
@@ -90,7 +90,9 @@ class UserSignUpSerializer(serializers.Serializer):
 class UserLoginSerializer(serializers.Serializer):
     """User login serializer"""
     username = serializers.CharField()
+
     password = serializers.CharField(min_length= 4, max_length = 64)
+
 
     """Se sobreescribe el metodo validate para hacer validacion propias"""
 

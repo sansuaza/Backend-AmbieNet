@@ -19,9 +19,14 @@ class User(AmbieNetModel, AbstractUser):
         (ENTIDAD, 'entidad'),
         (SENSOR_SOCIAL, 'sensor_social'),
         (USUARIO_REGULAR, 'usuario_regular')
-    )   
+    )
 
-    role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, blank=True, null=True, default=3)
+    role = models.PositiveSmallIntegerField(
+        choices=ROLE_CHOICES,
+        blank=True,
+        null=True,
+        default=3
+        )
 
     email = models.EmailField(
         'email address',
@@ -32,7 +37,7 @@ class User(AmbieNetModel, AbstractUser):
     )
 
     phone_regex = RegexValidator(
-       
+
         regex=r'\+?1?\d{9,15}$',
         message="Phone number must be entered in the format: +999999999. Up to 15 digits allowed."
     )
@@ -47,7 +52,6 @@ class User(AmbieNetModel, AbstractUser):
         default=True,
         help_text='Set to true when the user have verified its email address.'
     )
-
 
     def __str__(self):
         """Return username."""
