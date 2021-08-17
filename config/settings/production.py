@@ -5,7 +5,7 @@ from .base import env
 
 # Base
 SECRET_KEY = env('DJANGO_SECRET_KEY')
-ALLOWED_HOSTS = ['ambienetuq.tk', '18.224.199.222']
+ALLOWED_HOSTS = ['ambienetuq.xyz', '18.117.94.104']
 #ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['ambienetuq.tk'])
 
 # Databases
@@ -43,7 +43,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/'
+MEDIA_URL = f'http://13.58.8.74/php/api/'
 
 # Templates
 TEMPLATES[0]['OPTIONS']['loaders'] = [  # noqa F405

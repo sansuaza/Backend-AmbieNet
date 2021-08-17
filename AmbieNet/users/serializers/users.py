@@ -90,7 +90,9 @@ class UserSignUpSerializer(serializers.Serializer):
 class UserLoginSerializer(serializers.Serializer):
     """User login serializer"""
     username = serializers.CharField()
-    password = serializers.CharField(min_length= 8, max_length = 64)
+
+    password = serializers.CharField(min_length= 4, max_length = 64)
+
 
     """Se sobreescribe el metodo validate para hacer validacion propias"""
 

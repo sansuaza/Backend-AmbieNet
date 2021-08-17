@@ -42,7 +42,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
             return UserSignUpSerializer
         if self.action == 'login':
             return UserLoginSerializer
-        if self.action in ['update', 'partial_update']:
+        if self.action in ['update', 'partial_update', 'retrieve']:
             return UserModelSerializer
         if self.action in ['make_request']:
             return CreateRoleRequestSerializer
