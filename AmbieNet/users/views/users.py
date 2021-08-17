@@ -15,7 +15,7 @@ from rest_framework.permissions import(
     AllowAny,
     IsAuthenticated
 )
-from AmbieNet.users.permissions import IsAccountOwner
+from AmbieNet.users.permissions import IsAccountOwner, IsAdminUser
 
 #Serializers
 from AmbieNet.users.serializers import (
@@ -42,7 +42,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
             return UserSignUpSerializer
         if self.action == 'login':
             return UserLoginSerializer
-        if self.action in ['update', 'partial_update', 'retrieve']:
+        if self.action in ['update', 'partial_update', 'retrieve', 'list']:
             return UserModelSerializer
         if self.action in ['make_request']:
             return CreateRoleRequestSerializer
@@ -56,6 +56,8 @@ class UserViewSet(mixins.RetrieveModelMixin,
             permissions = [IsAccountOwner]
         elif self.action in ['make_request']:
             permissions = [IsAuthenticated]
+        elif self.action in ['list']:
+            permissions = [IsAdminUser]
         return [permission() for permission in permissions]
 
     @action(detail=False, methods=['post'])

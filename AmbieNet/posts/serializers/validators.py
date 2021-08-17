@@ -25,7 +25,7 @@ class ValidatorCreateSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta Class"""
         model = Validator
-        
+
         fields = (
             'user',
             'post',
@@ -46,11 +46,11 @@ class ValidatorCreateSerializer(serializers.ModelSerializer):
 
     def create(self, data):
         #Modificar esta busqueda manual, esto se debe sacar por el self, no entiendo porque pero asi dice don suaza :D
-        
+        # Aumentar el numero de validaciones en el atributo del post
         user = User.objects.get(username=data['user'])
         post = Post.objects.get(id=data['post'])
         data['user']=user
         data['post']=post
         validator = Validator.objects.create(**data)
-       
+
         return validator
