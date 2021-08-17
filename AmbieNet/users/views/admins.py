@@ -51,7 +51,7 @@ class AdminViewSet(viewsets.GenericViewSet):
         asked by the users."""
 
         user = User.objects.get(username = request.data['user__username'])
-        new_role = ""
+        new_role = 0
         if request.data['request_status'] == 'approved':
             new_role = request.data['new_role']
 

@@ -56,10 +56,10 @@ class RoleRequestModelSerializer(serializers.ModelSerializer):
 
 class AnswerRoleRequestSerializer(serializers.Serializer):
 
-    staff_username = serializers.CharField(min_length=6)
+    staff_username = serializers.CharField(min_length=4)
     username = serializers.CharField(min_length=6)
     request_status = serializers.CharField()
-    new_role = serializers.IntegerField()
+    new_role = serializers.IntegerField(required = False, allow_null = True)
 
     def validate(self, data):
         """Handle of validate the existence of user role request."""
