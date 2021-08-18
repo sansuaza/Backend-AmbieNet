@@ -26,7 +26,7 @@ class PostViewSet(mixins.UpdateModelMixin,
                 mixins.ListModelMixin,
                 mixins.DestroyModelMixin,
                 viewsets.GenericViewSet):
-    
+
     queryset = Post.objects.all()
     lookup_field = 'id'
 
@@ -36,7 +36,6 @@ class PostViewSet(mixins.UpdateModelMixin,
             permissions = [AllowAny]
         else:
             permissions = [IsAuthenticated]
-            
         if self.action in ['delete', 'destroy']:
             permissions = [IsPostOwner | IsAdminUser]
         return [permission() for permission in permissions]
@@ -45,16 +44,16 @@ class PostViewSet(mixins.UpdateModelMixin,
         """ Assing the necessary serializer for each process. """
         if (self.action in ['list', 'partial_update']):
             return PostModelSerializer
-        return PostCreateSerializer    
+        return PostCreateSerializer
 
     @action(detail=False, methods=['post'])
     def validator(self,request,*args,**kwargs):
-        
+
         user = User.objects.get(username=request.data['user']).id
         post = Post.objects.get(id=request.data['post'])
         id_post=post.id
         datos = {
-            'user' : user,   
+            'user' : user,
             'post' : id_post
         }
         serializer = ValidatorCreateSerializer(data = request.data)
@@ -73,7 +72,7 @@ class PostViewSet(mixins.UpdateModelMixin,
         serializer.is_valid(raise_exception=True)
         post = serializer.save()
         data = PostModelSerializer(post).data
-        
+
         username = User.objects.get(id = data['user']).username
         data['user']= username
 
