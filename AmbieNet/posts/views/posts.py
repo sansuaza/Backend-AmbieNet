@@ -72,8 +72,8 @@ class PostViewSet(mixins.UpdateModelMixin,
         serializer.is_valid(raise_exception=True)
         post = serializer.save()
         data = PostModelSerializer(post).data
-
-        username = User.objects.get(id = data['user']).username
+        #import ipdb; ipdb.set_trace()
+        username = User.objects.get(username = data['user']['username']).username
         data['user']= username
 
         return Response(data, status = status.HTTP_201_CREATED)
