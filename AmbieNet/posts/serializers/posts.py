@@ -35,9 +35,8 @@ class PostModelSerializer(serializers.ModelSerializer):
             'validator_number',
             'created',
             'id',
-            'username',
+            'type_post',
             'advanced_report'
-
         )
 
         read_only_fields = (

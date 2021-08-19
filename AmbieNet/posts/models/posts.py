@@ -3,6 +3,8 @@ from django.db import models
 
 #Utils
 from AmbieNet.util.models.ambienet import AmbieNetModel
+
+# Models
 from AmbieNet.users.models import User, Profile
 
 class Post(AmbieNetModel):
@@ -39,15 +41,16 @@ class Post(AmbieNetModel):
         blank = False
     )
 
-    """ Post's Data. """
+    """ Complaint and banning info. """
+    cant_user_complaints = models.IntegerField(default = 0)
+    is_banned = models.BooleanField(default=False)
+
     title = models.CharField(max_length=60, blank=False)
     description = models.CharField(max_length=255)
     type_catastrophe = models.CharField(blank=False, max_length=20)
     #"likes"
     validator_number = models.IntegerField(default=0)
-
     photo=models.ImageField(max_length=255, blank=True)
-
     username = models.CharField(max_length=255, blank=True)
 
     """ Location Data. """
