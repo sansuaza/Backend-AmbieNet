@@ -12,7 +12,6 @@ from rest_framework.routers import DefaultRouter
 from .views import posts as post_views
 
 
-
 router = DefaultRouter()
 router.register(r'posts', post_views.PostViewSet, basename='posts')
 

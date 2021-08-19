@@ -98,7 +98,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
 
     @action(detail=True, methods=['put', 'patch'])
     def profile(self, request, *args, **kwargs):
-        """Update profile data."""
+        """ Update profile data. """
         user = self.get_object()
         profile = user.profile
         partial = request.method == 'PATCH'
