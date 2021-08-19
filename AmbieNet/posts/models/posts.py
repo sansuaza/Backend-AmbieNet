@@ -16,7 +16,7 @@ class Post(AmbieNetModel):
     profile = models.ForeignKey (Profile, on_delete = models.PROTECT)
 
     """ Advanced report relation. """
-    advanced_report = models.ForeignKey (
+    advanced_report = models.ForeignKey(
         'posts.AdvancedReport',
         on_delete = models.CASCADE,
         blank = True,

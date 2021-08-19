@@ -31,7 +31,7 @@ class PostViewSet(mixins.UpdateModelMixin,
     lookup_field = 'id'
 
     def get_permissions(self):
-        """Assign the permissions based on action required."""
+        """ Assign the permissions based on action required. """
         if self.action in ['list']:
             permissions = [AllowAny]
         else:
@@ -48,7 +48,7 @@ class PostViewSet(mixins.UpdateModelMixin,
 
     @action(detail=False, methods=['post'])
     def validator(self,request,*args,**kwargs):
-
+        """ Handle of validate the users by a user. """
         user = User.objects.get(username=request.data['user']).id
         post = Post.objects.get(id=request.data['post'])
         id_post=post.id
@@ -66,14 +66,11 @@ class PostViewSet(mixins.UpdateModelMixin,
 
     @action(detail=False, methods=['post'])
     def publicacion(self,request, *args, **kwargs):
-        """Handle of create the posts."""
+        """ Handle of create the posts. """
         serializer_class = self.get_serializer_class()
         serializer = serializer_class(data = request.data)
         serializer.is_valid(raise_exception=True)
         post = serializer.save()
         data = PostModelSerializer(post).data
-
-        username = User.objects.get(id = data['user']).username
-        data['user']= username
 
         return Response(data, status = status.HTTP_201_CREATED)
