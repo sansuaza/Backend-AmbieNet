@@ -111,7 +111,7 @@ class PostCreateSerializer(serializers.Serializer):
             'longitude': post.longitude
         }
         # self.define_perimeter(data=data)
-        self.update_user_punctuation(user = user)
+        self.update_user_punctuation(user = post.user)
         return post
 
     def update_user_punctuation(self, user):

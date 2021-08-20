@@ -50,7 +50,7 @@ class ValidatorCreateSerializer(serializers.ModelSerializer):
         post = Post.objects.get(id=data['post'])
         data['user']=user
         data['post']=post
-        self.update_user_punctuation(user)
+        self.update_user_punctuation(post.user)
         post.validator_number += 1
         post.save()
         validator = Validator.objects.create(**data)

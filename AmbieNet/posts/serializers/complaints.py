@@ -46,7 +46,7 @@ class PostComplaintModelSerializer(serializers.ModelSerializer):
         # check if the post has to be banned
         if not post.cant_user_complaints < 20:
             post.is_banned = True
-            self.update_punctuation_user(user)
+            self.update_punctuation_user(post.user)
             post.save()
 
         return post_complaint
