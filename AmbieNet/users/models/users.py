@@ -7,8 +7,8 @@ from AmbieNet.util.models.ambienet import AmbieNetModel
 
 
 class User(AmbieNetModel, AbstractUser):
-    """User model
-    Extends from AbstractUser, and keeps the same usernamefield (username)
+    """ User model
+    Extends from AbstractUser, and keeps the same usernamefield (username).
     """
 
     ENTIDAD = 1
@@ -46,12 +46,17 @@ class User(AmbieNetModel, AbstractUser):
 
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
-    """All users get verified by email message."""
+    """ All users get verified by email message. """
     is_verified = models.BooleanField(
         'verified',
         default=True,
         help_text='Set to true when the user have verified its email address.'
     )
+
+    """ Reputation Info. """
+    quantity_reported_posts = models.IntegerField(default = 0)
+    punctuation = models.IntegerField(default = 0)
+    level = models.SmallIntegerField(default = 0)
 
     def __str__(self):
         """Return username."""

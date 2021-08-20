@@ -46,6 +46,13 @@ class PostComplaintModelSerializer(serializers.ModelSerializer):
         # check if the post has to be banned
         if not post.cant_user_complaints < 20:
             post.is_banned = True
+            self.update_punctuation_user(user)
             post.save()
 
         return post_complaint
+
+    def update_punctuation_user(self, user):
+        """ Update the user punctuation after bann a post """
+
+        user.punctuation -= 10
+        user.save()

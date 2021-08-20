@@ -49,7 +49,7 @@ class Post(AmbieNetModel):
     description = models.CharField(max_length=255)
     type_catastrophe = models.CharField(blank=False, max_length=20)
     #"likes"
-    validator_number = models.IntegerField(default=0)
+    validator_number = models.BigIntegerField(default=0)
     photo=models.ImageField(max_length=255, blank=True)
     username = models.CharField(max_length=255, blank=True)
 

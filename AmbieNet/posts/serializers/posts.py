@@ -25,7 +25,7 @@ class PostModelSerializer(serializers.ModelSerializer):
         model = Post
 
         fields = (
-            'user',
+            'is_banned',
             'title',
             'description',
             'type_catastrophe',
@@ -36,6 +36,7 @@ class PostModelSerializer(serializers.ModelSerializer):
             'created',
             'id',
             'type_post',
+            'user',
             'advanced_report'
         )
 
@@ -110,8 +111,19 @@ class PostCreateSerializer(serializers.Serializer):
             'longitude': post.longitude
         }
         # self.define_perimeter(data=data)
-
+        self.update_user_punctuation(user = user)
         return post
+
+    def update_user_punctuation(self, user):
+        """ Handle of increase punctuation of poster user. """
+        if user.punctuation < 100:
+            if user.punctuation > 95:
+                user.punctuation = 100
+            else:
+                user.punctuation += 5
+
+        user.save()
+
 
     def define_perimeter(self, data):
         """Handle of calculate the perimeter of disaster."""

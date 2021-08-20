@@ -46,11 +46,19 @@ class ValidatorCreateSerializer(serializers.ModelSerializer):
 
     def create(self, data):
         #Modificar esta busqueda manual, esto se debe sacar por el self, no entiendo porque pero asi dice don suaza :D
-        # Aumentar el numero de validaciones en el atributo del post
         user = User.objects.get(username=data['user'])
         post = Post.objects.get(id=data['post'])
         data['user']=user
         data['post']=post
+        self.update_user_punctuation(user)
+        post.validator_number += 1
+        post.save()
         validator = Validator.objects.create(**data)
 
         return validator
+
+    def update_user_punctuation(self, user):
+        """ Handle of increase punctuation of poster user. """
+        if user.punctuation < 100:
+            user.punctuation += 1
+            user.save()

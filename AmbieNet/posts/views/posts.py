@@ -66,7 +66,7 @@ class PostViewSet(mixins.UpdateModelMixin,
         validator = serializer.save()
         data = ValidatorCreateSerializer(validator).data
         #import pdb; pdb.set_trace()
-        data['validator_number']=post.validator_number
+        data['validator_number']=post.validator_number + 1
         return Response(data, status = status.HTTP_201_CREATED)
 
     @action(detail=False, methods=['post'])
