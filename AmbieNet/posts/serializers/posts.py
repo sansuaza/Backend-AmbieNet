@@ -122,6 +122,8 @@ class PostCreateSerializer(serializers.Serializer):
             else:
                 user.punctuation += 5
 
+            user.check_level()
+
         user.save()
 
 

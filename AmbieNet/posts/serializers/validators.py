@@ -61,4 +61,5 @@ class ValidatorCreateSerializer(serializers.ModelSerializer):
         """ Handle of increase punctuation of poster user. """
         if user.punctuation < 100:
             user.punctuation += 1
+            user.check_level()
             user.save()

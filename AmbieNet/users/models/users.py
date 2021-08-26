@@ -65,3 +65,22 @@ class User(AmbieNetModel, AbstractUser):
     def get_short_name(self):
         """Return username."""
         return self.username
+
+    def check_level(self):
+        LEVEL_2 = 20
+        LEVEL_3 = 35
+        LEVEL_4 = 60
+        LEVEL_5 = 100
+
+        if self.punctuation < LEVEL_2:
+            self.level = 1
+        elif self.punctuation < LEVEL_3:
+            self.level = 2
+        elif self.punctuation < LEVEL_4:
+            self.level = 3
+        elif self.punctuation < LEVEL_5:
+            self.level = 4
+        elif self.punctuation == LEVEL_5:
+            self.level = 5
+
+        return self.level

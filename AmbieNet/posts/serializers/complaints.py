@@ -55,4 +55,7 @@ class PostComplaintModelSerializer(serializers.ModelSerializer):
         """ Update the user punctuation after bann a post """
 
         user.punctuation -= 10
+        user.check_level()
         user.save()
+
+        return user
