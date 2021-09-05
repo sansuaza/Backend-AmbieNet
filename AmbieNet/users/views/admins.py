@@ -67,3 +67,18 @@ class AdminViewSet(viewsets.GenericViewSet):
         data = RoleRequestModelSerializer(serializer.save()).data
 
         return Response(data, status=status.HTTP_200_OK)
+
+
+    @action(detail=False, methods=['post'])
+    def ban_users(self, request):
+        """ Endpoint to bann an user. """
+        user = User.objects.get(username = request.data['username'])
+
+        if not user.is_active:
+            return Response({"message": "user is already banned"}, status = status.HTTP_400_BAD_REQUEST)
+
+        user.is_active = False
+        user.save()
+        data = UserModelSerializer(user).data
+
+        return Response(data, status= status.HTTP_200_OK)
