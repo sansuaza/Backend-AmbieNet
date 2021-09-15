@@ -2,27 +2,30 @@
 #Django
 from django.core.mail import send_mail
 
-#Django REST Framework
+# Django REST Framework
 from rest_framework import serializers
 
-#Models
-from AmbieNet.posts.models import Post
+# Models
+from AmbieNet.posts.models import Post, AdvancedReport
 from AmbieNet.users.models import User
 from AmbieNet.users.models import Profile
 
-from AmbieNet.users.serializers.profiles import ProfileModelSerializer
 
-""" prueba  """
+# Serializers
+from AmbieNet.users.serializers.users import UserModelSerializer
+from AmbieNet.posts.serializers.advanced_reports import AdvancedReportModelSerializer
+
 
 class PostModelSerializer(serializers.ModelSerializer):
 
-    profile = ProfileModelSerializer(read_only=True)
+    user = UserModelSerializer(read_only=True)
+    advanced_report = AdvancedReportModelSerializer(required = False)
     class Meta:
         """Meta Class"""
         model = Post
 
         fields = (
-            'user',
+            'is_banned',
             'title',
             'description',
             'type_catastrophe',
@@ -32,13 +35,12 @@ class PostModelSerializer(serializers.ModelSerializer):
             'validator_number',
             'created',
             'id',
-            'username',
-            'profile'
-
+            'type_post',
+            'user',
+            'advanced_report'
         )
 
         read_only_fields = (
-            'user',
             'title',
             'latitud',
             'longitud',
@@ -51,10 +53,14 @@ class PostModelSerializer(serializers.ModelSerializer):
 
 class PostCreateSerializer(serializers.Serializer):
 
+    advanced_report = AdvancedReportModelSerializer(required = False)
+
     user = serializers.CharField(
         min_length = 1,
         max_length = 50
     )
+
+    type_post = serializers.CharField(max_length = 4)
 
     photo = serializers.CharField(
         max_length = 255
@@ -79,21 +85,47 @@ class PostCreateSerializer(serializers.Serializer):
     longitude = serializers.FloatField()
 
     def create(self, data):
-        #Modificar esta busqueda manual, esto se debe sacar por el self, no entiendo porque pero asi dice don suaza :D
         user = User.objects.get(username=data['user'])
         username = user.username
         profile = Profile.objects.get(user=user)
         data.pop('user')
-        post = Post.objects.create(user=user, username=username, profile=profile,**data)
+
+        if(data['type_post'] == 'ADV'):
+            advanced_data = dict(data['advanced_report'])
+            advanced_report = AdvancedReport.objects.create(**advanced_data)
+
+            data.pop('advanced_report')
+
+            post = Post.objects.create(
+                user=user,
+                username=username,
+                profile=profile,
+                advanced_report = advanced_report,
+                **data)
+        else:
+            post = Post.objects.create(user=user, username=username, profile=profile, **data)
 
         """making of ubication posts."""
         data= {
             'latitude': post.latitude,
             'longitude': post.longitude
         }
-        self.define_perimeter(data=data)
-
+        # self.define_perimeter(data=data)
+        self.update_user_punctuation(user = post.user)
         return post
+
+    def update_user_punctuation(self, user):
+        """ Handle of increase punctuation of poster user. """
+        if user.punctuation < 100:
+            if user.punctuation > 95:
+                user.punctuation = 100
+            else:
+                user.punctuation += 5
+
+            user.check_level()
+
+        user.save()
+
 
     def define_perimeter(self, data):
         """Handle of calculate the perimeter of disaster."""

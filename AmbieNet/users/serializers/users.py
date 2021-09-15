@@ -22,6 +22,8 @@ class UserModelSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'username',
+            'is_active',
+            'level',
             'first_name',
             'last_name',
             'email',
@@ -64,7 +66,7 @@ class UserSignUpSerializer(serializers.Serializer):
     phone_number = serializers.CharField(validators= [phone_regex])
 
     password = serializers.CharField(
-        min_length=4,
+        min_length=6,
         max_length=16
     )
 
@@ -90,25 +92,15 @@ class UserSignUpSerializer(serializers.Serializer):
 class UserLoginSerializer(serializers.Serializer):
     """User login serializer"""
     username = serializers.CharField()
+
     password = serializers.CharField(min_length= 4, max_length = 64)
 
-    """Se sobreescribe el metodo validate para hacer validacion propias"""
-
-
-    """Los validators primero llaman al metodo validate y despues al create"""
     def validate (self, data):
-        """Si las data si está bien autenticada, retorna el user"""
+
         user = authenticate(username= data['username'], password = data['password'])
 
         if not user:
             raise serializers.ValidationError('Invalid credentials')
-
-        """
-        El context es un atributo que da a entender en que contexto
-        se desarrolla la peticion, entre esa info el usuario que la hace
-        como ya se tiene detectado el usuario que va a hacer login, se
-        agrega este usuario al contexto
-        """
 
         self.context['user']= user
         return data
@@ -116,7 +108,5 @@ class UserLoginSerializer(serializers.Serializer):
     def create(self, data):
         """Generate or retrive new token."""
 
-        """el metodo "get_or_create" es una auxiliar para el patron de
-        diseño singleton"""
         token, created = Token.objects.get_or_create(user=self.context['user'])
         return self.context['user'], token.key

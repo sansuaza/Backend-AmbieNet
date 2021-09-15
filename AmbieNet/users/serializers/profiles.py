@@ -1,11 +1,10 @@
 """Profile serializer."""
 
-#Django REST Framework
+# Django REST Framework
 from rest_framework import serializers
 
-#Models
+# Models
 from AmbieNet.users.models import Profile
-    
 
 
 class ProfileModelSerializer(serializers.ModelSerializer):
