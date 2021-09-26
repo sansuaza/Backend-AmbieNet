@@ -17,6 +17,42 @@ class Post(AmbieNetModel):
     user = models.ForeignKey (User, on_delete = models.CASCADE)
     profile = models.ForeignKey (Profile, on_delete = models.PROTECT)
 
+
+    """ Kind of Posts. """
+    REPORT = 'REP'
+    CATASTROPHE = 'CAT'
+    POSITIVE_NEWS = 'NEW'
+    COMPLAINT = 'COMP'
+
+    TYPE_POST_CHOICES = [
+        (REPORT, 'report'),
+        (CATASTROPHE, 'catastrophe'),
+        (POSITIVE_NEWS, 'positive_news'),
+        (COMPLAINT, 'complaint')
+    ]
+
+    type_post = models.CharField(
+        max_length = 4,
+        choices = TYPE_POST_CHOICES,
+        blank = False
+    )
+
+
+    """ Kind of Reports. """
+    COMMON = 'COM'
+    ADVANCED = 'ADV'
+
+    TYPE_REPORT_CHOICES = [
+        (COMMON, 'common'),
+        (ADVANCED, 'advanced')
+    ]
+
+    type_report = models.CharField(
+        max_length = 4,
+        choices = TYPE_REPORT_CHOICES,
+        blank = True
+    )
+
     """ Advanced report relation. """
     advanced_report = models.ForeignKey(
         'posts.AdvancedReport',
@@ -25,21 +61,6 @@ class Post(AmbieNetModel):
         null = True
     )
 
-    """ Kind of posts. """
-    COMMON = 'COM'
-    ADVANCED = 'ADV'
-
-    TYPE_POST_CHOICES = [
-        (COMMON, 'common'),
-        (ADVANCED, 'advanced')
-    ]
-
-    type_post = models.CharField(
-        max_length = 4,
-        choices = TYPE_POST_CHOICES,
-        default = COMMON,
-        blank = False
-    )
 
     """ Complaint and banning info. """
     cant_user_complaints = models.IntegerField(default = 0)
@@ -47,7 +68,7 @@ class Post(AmbieNetModel):
 
     title = models.CharField(max_length=60, blank=False)
     description = models.CharField(max_length=255)
-    type_catastrophe = models.CharField(blank=False, max_length=20)
+    type_catastrophe = models.CharField(blank=True, max_length=20)
     #"likes"
     validator_number = models.BigIntegerField(default=0)
     photo=models.ImageField(max_length=255, blank=True)

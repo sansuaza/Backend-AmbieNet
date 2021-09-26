@@ -70,7 +70,7 @@ class PostViewSet(mixins.UpdateModelMixin,
         return Response(data, status = status.HTTP_201_CREATED)
 
     @action(detail=False, methods=['post'])
-    def publicacion(self,request, *args, **kwargs):
+    def publicate(self,request, *args, **kwargs):
         """ Handle of create the posts. """
         serializer_class = self.get_serializer_class()
         serializer = serializer_class(data = request.data)
