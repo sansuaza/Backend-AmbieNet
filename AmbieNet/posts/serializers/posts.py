@@ -60,7 +60,11 @@ class PostCreateSerializer(serializers.Serializer):
         max_length = 50
     )
 
-    type_post = serializers.CharField(max_length = 4)
+    type_post = serializers.CharField(max_length = 4, required = True)
+
+    type_report = serializers.CharField(max_length = 4, required = False)
+
+    type_catastrophe = serializers.CharField(max_length = 4, required = False)
 
     photo = serializers.CharField(
         max_length = 255
@@ -78,30 +82,33 @@ class PostCreateSerializer(serializers.Serializer):
 
     type_catastrophe = serializers.CharField (
         min_length = 2,
-        max_length = 20
+        max_length = 20,
+        required = False
     )
 
     latitude = serializers.FloatField()
     longitude = serializers.FloatField()
 
     def create(self, data):
+
         user = User.objects.get(username=data['user'])
         username = user.username
         profile = Profile.objects.get(user=user)
         data.pop('user')
 
-        if(data['type_post'] == 'ADV'):
-            advanced_data = dict(data['advanced_report'])
-            advanced_report = AdvancedReport.objects.create(**advanced_data)
+        if(data['type_post'] == 'REP'):
+            if(data['type_report'] == 'ADV'):
+                advanced_data = dict(data['advanced_report'])
+                advanced_report = AdvancedReport.objects.create(**advanced_data)
 
-            data.pop('advanced_report')
+                data.pop('advanced_report')
 
-            post = Post.objects.create(
-                user=user,
-                username=username,
-                profile=profile,
-                advanced_report = advanced_report,
-                **data)
+                post = Post.objects.create(
+                    user=user,
+                    username=username,
+                    profile=profile,
+                    advanced_report = advanced_report,
+                    **data)
         else:
             post = Post.objects.create(user=user, username=username, profile=profile, **data)
 
