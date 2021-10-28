@@ -4,6 +4,7 @@ volumes:
   production_postgres_data: {}
   production_postgres_data_backups: {}
   production_caddy: {}
+  production_apache: {}
 
 services:
   django: &django
@@ -43,3 +44,15 @@ services:
     ports:
       - "0.0.0.0:80:80"
       - "0.0.0.0:443:443"
+
+  php:
+    build:
+      context: .
+      dockerfile: ./compose/local/apache/Dockerfile
+    hostname: apache
+    container_name: apache
+    restart: always
+    ports:
+      - "2015:80"
+    volumes:
+      - production_apache:/var/www/html
