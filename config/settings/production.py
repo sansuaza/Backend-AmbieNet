@@ -43,7 +43,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-MEDIA_URL = f'http://13.58.8.74/php/api/'
+MEDIA_URL = f'http://18.117.175.146:2015/'
 
 # Templates
 TEMPLATES[0]['OPTIONS']['loaders'] = [  # noqa F405
