@@ -3,6 +3,7 @@ version: '3'
 volumes:
   local_postgres_data: {}
   local_postgres_data_backups: {}
+  production_apache: {}
 
 services:
   django: &django
@@ -48,3 +49,14 @@ services:
     depends_on:
       - postgres
     
+  php:
+    build:
+      context: .
+      dockerfile: ./compose/local/apache/Dockerfile
+    hostname: apache
+    container_name: apache
+    restart: always
+    ports:
+      - "2015:80"
+    volumes:
+      - production_apache:/var/www/html
