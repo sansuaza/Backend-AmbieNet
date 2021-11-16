@@ -10,7 +10,6 @@ from AmbieNet.posts.models import Post, Validator
 from AmbieNet.users.models import User
 
 
-
 class ValidatorCreateSerializer(serializers.ModelSerializer):
 
     user = serializers.CharField(

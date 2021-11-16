@@ -12,6 +12,9 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from AmbieNet.posts.models import Post
 from AmbieNet.users.models import User
 
+#Filters
+from rest_framework.filters import SearchFilter, OrderingFilter
+
 #Serialzers
 from AmbieNet.posts.serializers import(
     PostModelSerializer,
@@ -32,6 +35,11 @@ class PostViewSet(mixins.UpdateModelMixin,
 
     queryset = Post.objects.all()
     lookup_field = 'id'
+
+    #Filters
+    filter_backends = (SearchFilter, OrderingFilter)
+    search_fields = ('type_post', 'type_catastrophe')
+    ordering_fields = ('validator_number', )
 
     def get_permissions(self):
         """ Assign the permissions based on action required. """

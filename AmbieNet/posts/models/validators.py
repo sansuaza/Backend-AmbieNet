@@ -11,7 +11,6 @@ class Validator(AmbieNetModel):
     Validator.
     post's validator.
     """
-
     user = models.ForeignKey (User, on_delete = models.CASCADE)
     post = models.ForeignKey (Post, on_delete = models.CASCADE)
 
