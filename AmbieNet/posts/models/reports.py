@@ -17,6 +17,9 @@ class AdvancedReport(AmbieNetModel):
     conditions_can_be_triggered = models.CharField(max_length = 255)
     associated_risks = models.CharField(max_length = 255)
 
+    affected_people = models.CharField(max_length = 255, blank= True)
+    affected_species = models.CharField(max_length = 255, blank = True)
+
     def __str__(self):
         """ Return titles. """
         return self.climatic_phenomenon

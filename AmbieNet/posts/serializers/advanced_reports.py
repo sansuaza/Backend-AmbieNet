@@ -14,5 +14,6 @@ class AdvancedReportModelSerializer(serializers.ModelSerializer):
 
         fields = (
             'climatic_phenomenon', 'time_interval', 'temp_max',
-            'temp_min', 'conditions_can_be_triggered', 'associated_risks'
+            'temp_min', 'conditions_can_be_triggered', 'associated_risks',
+            'affected_people', 'affected_species'
         )
